@@ -13,59 +13,12 @@ using UnityEngine.UI;  /////
 
 namespace HS1_Randomizer
 {
-    public class Plugin : MonoBehaviour, IllusionPlugin.IPlugin
+    public class Main : MonoBehaviour, IllusionPlugin.IPlugin
     {
-
-        //public RandomPhotoCtrlPanel randPhotoCtrl;
-        //
-        // public CharFemale female = FindObjectOfType;
-		// public static CharFemale charFemale = null;
 		
 		public CharFemale female = FindObjectOfType<CharFemale>();
-	    //levelManager = GameObject.FindObjectOfType<LevelManager>();
-        //var motionReceiver = FindObjectOfType<OpponentMotionReceiver>();
-		//public static void femaleCum()
-		//{
-		//	CharFemale[] array = Object.FindObjectsOfType<CharFemale>();
-		//	foreach (CharFemale charFemale in array)
-		//	{
-		//		HParticleCtrl hParticleCtrl = new HParticleCtrl();
-		//		hParticleCtrl.Init("list/h/", charFemale.chaBody.objBone);
-		//		hParticleCtrl.Play(0);
-		//	}
-		//}
-		
-        //
-        //protected bool saveCard;
-        ////////////////////////////////////////////////
 
-        //public virtual void Init(CharFemale _female)
-        //{
-        //    female = _female;
-        //}
-        ////////////////////////////////////////////////
-        public string Name { get { return "HS1_Randomizer"; } }
-
-        public string Version { get { return "0.1"; } }
-
-        public void OnApplicationQuit()
-        {
-        }
-
-        public void OnApplicationStart()
-        {
-            //_log.Info("Starting HS1_Randomizer...");
-        }
-
-        public void OnFixedUpdate()
-        {
-        }
-
-        public void OnLateUpdate()
-        {
-        }
-
-        public class HS1RandomizeClass
+        public class HS1RandomizeAll
         {
             public void Update()
             {
@@ -73,42 +26,9 @@ namespace HS1_Randomizer
                 {
                     female.customInfo.shapeValueBody[0] = UnityEngine.Random.Range(0.6f, 0.95f);
                     female.customInfo.shapeValueBody[1] = UnityEngine.Random.Range(0.6f, 0.9f);
-                    //  }
                 }
             }
 	    }	
-
-        public void OnLevelWasInitialized(int level)
-        {
-            ////(check for maker scene)
-            var sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
-            if (sceneName == "CustomScene")
-            {
-                //create new GameObject() + add MonoBehaviour to it
-                var newObject = new GameObject();
-                newObject.AddComponent<HS1RandomizeClass>();
-            }
-        }
-
-        //   var customMainMenu = GameObject.Find("CustomMainMenu");
-        //   _partManager = customMainMenu.AddComponent<PartManager>();
-       
-        public void OnLevelWasLoaded(int level)
-        {
-            // if (_partManager != null)
-            // {
-            //    _partManager.Unload();
-            //    _partManager = null;
-            // }
-        }
-       
-        ////////////////////////////////////////////////
-        public void OnUpdate()
-        {
-            //if (_partManager != null)
-            //{	
-        }
-    ////////////////////////////////////////////////	
   }
 }
 
