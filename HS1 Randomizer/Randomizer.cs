@@ -54,26 +54,31 @@ public class HS1RandomizeAll : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Keypad1))
         {
             RandomiseCharAll();
+		    female.Reload();
         }
         //////////////////////////////////////// Only face
         if (Input.GetKeyDown(KeyCode.Keypad2))
         {
             RandomiseCharFace();
+		    female.Reload();
         }
         //////////////////////////////////////// Only body
         if (Input.GetKeyDown(KeyCode.Keypad3))
         {
             RandomiseCharBody();
+		    female.Reload();
         }
         //////////////////////////////////////// Body/Face
         if (Input.GetKeyDown(KeyCode.Keypad4))
         {
             RandomiseCharBodyFace();
+		    female.Reload();
         }
         //////////////////////////////////////// Clothes and accessories
         if (Input.GetKeyDown(KeyCode.Keypad5))
         {
             RandomiseCharClothing();
+		    female.Reload();
         }
         //////////////////////////////////////// Save card
         if (Input.GetKeyDown(KeyCode.Keypad6))
@@ -91,23 +96,23 @@ public class HS1RandomizeAll : MonoBehaviour
         RandomiseCharBody();
         RandomiseCharClothing();
 
-        female.chaFile.ChangeCoordinateType((CharDefine.CoordinateType)coordinateType);
-        female.Reload();
-        UpdateCharaInfo();
-        saveCard = false;
-        PersonalityIdInfo personalityInfo = female.ListInfo.GetPersonalityInfo(female.chaFile.customInfo.personality);
-        int ptn = personalityInfo.randAnmPtn[UnityEngine.Random.Range(0, 3)];
-        randPhotoCtrl.ChangeCustomAnm(ptn);
-        female.ChangeEyesPtn(personalityInfo.randEyesPtn);
-        female.ChangeMouthPtn(personalityInfo.randMouthPtn);
-        Singleton<Voice>.Instance.StopAll();
-        Transform transform = Singleton<Voice>.Instance.Play(female.chaFile.customInfo.personality, personalityInfo.assetBundleName, personalityInfo.randomVoice, female.chaFile.customInfo.voicePitch);
-        if ((bool)transform)
-        {
-            female.SetVoice(transform);
-        }
-        return;
-        //female.chaCustom.UpdateShapeBodyValueFromCustomInfo();
+        //female.chaFile.ChangeCoordinateType((CharDefine.CoordinateType)coordinateType);
+        //female.Reload();
+        //UpdateCharaInfo();
+        //saveCard = false;
+        //PersonalityIdInfo personalityInfo = female.ListInfo.GetPersonalityInfo(female.chaFile.customInfo.personality);
+        //int ptn = personalityInfo.randAnmPtn[UnityEngine.Random.Range(0, 3)];
+        //randPhotoCtrl.ChangeCustomAnm(ptn);
+        //female.ChangeEyesPtn(personalityInfo.randEyesPtn);
+        //female.ChangeMouthPtn(personalityInfo.randMouthPtn);
+        //Singleton<Voice>.Instance.StopAll();
+        //Transform transform = Singleton<Voice>.Instance.Play(female.chaFile.customInfo.personality, personalityInfo.assetBundleName, personalityInfo.randomVoice, female.chaFile.customInfo.voicePitch);
+        //if ((bool)transform)
+        //{
+        //    female.SetVoice(transform);
+        //}
+        //return;
+        // female.chaCustom.UpdateShapeBodyValueFromCustomInfo();
     }
 
 
@@ -775,7 +780,7 @@ public class HS1RandomizeAll : MonoBehaviour
         female.femaleCustomInfo.underhairColor.specularIntensity = num8;
         female.femaleCustomInfo.underhairColor.specularSharpness = num9;
 
-        female.chaCustom.UpdateShapeBodyValueFromCustomInfo();
+        //female.chaCustom.UpdateShapeBodyValueFromCustomInfo();
     }
 
     void RandomiseCharBody()
@@ -1149,7 +1154,7 @@ public class HS1RandomizeAll : MonoBehaviour
         //t3 = Mathf.Lerp(0.3f, 0.7f, t3);
         //female.femaleCustomInfo.bustWeight = t3;
 
-        female.chaCustom.UpdateShapeBodyValueFromCustomInfo();
+        //female.chaCustom.UpdateShapeBodyValueFromCustomInfo();
     }
 
 
