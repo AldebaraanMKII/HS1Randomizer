@@ -11,7 +11,7 @@ using UnityEngine.UI;  /////
 //using IllusionPlugin;
 
 
-namespace HS1_RandomizerPlugin
+namespace HS1_Randomizer.Plugin
 {
     public class Plugin : MonoBehaviour, IllusionPlugin.IPlugin
     {
@@ -74,7 +74,8 @@ namespace HS1_RandomizerPlugin
             {
                 //create new GameObject() + add MonoBehaviour to it
                 var newObject = new GameObject();
-                newObject.AddComponent<Randomizer.HS1_Randomizer.HS1RandomizeAll>();
+                newObject.AddComponent(HS1_Randomizer.Main.HS1RandomizeAll); 
+				GameObject.Find("Main Camera").AddComponent<CamControl>();
             }
         }
 
