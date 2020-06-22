@@ -225,9 +225,9 @@ public class HS1RandomizeAll : MonoBehaviour
         ////////////////////////////////Eye Depth
         female.customInfo.shapeValueFace[26] = UnityEngine.Random.Range(0.1f, 0.5f);
         ////////////////////////////////Eye Width
-        female.customInfo.shapeValueFace[27] = UnityEngine.Random.Range(0.5f, 0.75f);
+        female.customInfo.shapeValueFace[27] = UnityEngine.Random.Range(0.6f, 0.8f);
         ////////////////////////////////Eye Openness
-        female.customInfo.shapeValueFace[28] = UnityEngine.Random.Range(0.2f, 0.6f);
+        female.customInfo.shapeValueFace[28] = UnityEngine.Random.Range(0.4f, 0.7f);
         ////////////////////////////////Eye Angle 1
         female.customInfo.shapeValueFace[29] = UnityEngine.Random.Range(0.45f, 0.55f);
         ////////////////////////////////Eye Angle 2
@@ -288,7 +288,7 @@ public class HS1RandomizeAll : MonoBehaviour
         female.customInfo.shapeValueFace[54] = UnityEngine.Random.Range(0.4f, 0.6f);
 
         ////////////////////////////////Mouth Height
-        female.customInfo.shapeValueFace[55] = UnityEngine.Random.Range(0.4f, 0.6f);
+        female.customInfo.shapeValueFace[55] = UnityEngine.Random.Range(0.5f, 0.8f);
         ////////////////////////////////Mouth Width
         female.customInfo.shapeValueFace[56] = UnityEngine.Random.Range(0.5f, 0.8f);
         ////////////////////////////////Lip Thickness
@@ -296,9 +296,9 @@ public class HS1RandomizeAll : MonoBehaviour
         ////////////////////////////////Mouth Projection
         female.customInfo.shapeValueFace[58] = UnityEngine.Random.Range(0.3f, 0.5f);
         ////////////////////////////////Upper Lip Thickness
-        female.customInfo.shapeValueFace[59] = UnityEngine.Random.Range(0.1f, 0.5f);
+        female.customInfo.shapeValueFace[59] = UnityEngine.Random.Range(0.1f, 0.3f);
         ////////////////////////////////Lower Lip Thickness
-        female.customInfo.shapeValueFace[60] = UnityEngine.Random.Range(0.2f, 0.5f);
+        female.customInfo.shapeValueFace[60] = UnityEngine.Random.Range(0.1f, 0.3f);
         ////////////////////////////////Corner Shape
         female.customInfo.shapeValueFace[61] = UnityEngine.Random.Range(0.2f, 0.5f);
 
@@ -325,7 +325,7 @@ public class HS1RandomizeAll : MonoBehaviour
         float num9 = 0f;
         if (UnityEngine.Random.Range(0, 100) < 90)
         {
-            float[,] array = new float[21, 8]
+            float[,] array = new float[21, 8] // 21 is number of {} and 8 is item count
             {
             {
                 6f,
@@ -579,25 +579,40 @@ public class HS1RandomizeAll : MonoBehaviour
         }
         //break;
         //}
-        int index5 = UnityEngine.Random.Range(0, list.Count);
+        // int index5 = UnityEngine.Random.Range(0, list.Count);
+		//46 base
+		//53 coiffure
+        int index5 = UnityEngine.Random.Range(0, 99);
         if ("1" == femaleFbxList[list[index5]].Etc[0])
         {
             flag = true;
         }
-
         female.customInfo.hairId[0] = list[index5];
+		
         if (!flag)
         {
             //////////////////////////////// hairType (Front)
             Dictionary<int, ListTypeFbx> femaleFbxList2 = female.ListInfo.GetFemaleFbxList(CharaListInfo.TypeFemaleFbx.cf_f_hairF);
-            int index6 = UnityEngine.Random.Range(1, femaleFbxList2.Count);
+            // int index6 = UnityEngine.Random.Range(1, femaleFbxList2.Count);
+		    //41 base
+		    //46 coiffure
+		    //27 useless stuff
+            int index6 = UnityEngine.Random.Range(1, 88);
             female.customInfo.hairId[1] = femaleFbxList2.ElementAt(index6).Key;
 
             //////////////////////////////// hairType (Side)
             if (UnityEngine.Random.Range(0, 100) < 50)
             {
                 Dictionary<int, ListTypeFbx> femaleFbxList3 = female.ListInfo.GetFemaleFbxList(CharaListInfo.TypeFemaleFbx.cf_f_hairS);
-                int index7 = UnityEngine.Random.Range(1, femaleFbxList3.Count);
+                // int index7 = UnityEngine.Random.Range(1, femaleFbxList3.Count);
+				//7 base 
+				//10 crap
+				//23 coiffure
+                int index7 = UnityEngine.Random.Range(1, 40);
+                if (index7 >= 8 && index7 <= 17)
+                {
+					index7 = index7 + 10;
+				}
                 female.customInfo.hairId[2] = femaleFbxList3.ElementAt(index7).Key;
             }
             else
@@ -689,7 +704,8 @@ public class HS1RandomizeAll : MonoBehaviour
                     list5.Add(item10.Key);
                 }
             }
-            int index11 = UnityEngine.Random.Range(0, list5.Count);
+            // int index11 = UnityEngine.Random.Range(0, list5.Count);
+            int index11 = UnityEngine.Random.Range(0, 10);
             female.femaleCustomInfo.texEyeshadowId = list5[index11];
             float[,] array5 = new float[7, 3]
             {
@@ -754,10 +770,25 @@ public class HS1RandomizeAll : MonoBehaviour
         //////////////////////////////// lips
         Dictionary<int, ListTypeTexture> femaleTextureList4 = female.ListInfo.GetFemaleTextureList(CharaListInfo.TypeFemaleTexture.cf_t_lip);
         // int index13 = UnityEngine.Random.Range(0, femaleTextureList4.Count);
-        int index13 = UnityEngine.Random.Range(0, 7);
+        int index13 = UnityEngine.Random.Range(0, 4);
         female.femaleCustomInfo.texLipId = femaleTextureList4.ElementAt(index13).Key;
-        float[,] array6 = new float[3, 3]
+        float[,] array6 = new float[6, 3]
         {
+        {
+            0f,
+            0.9f,
+            0.5f
+        },
+        {
+            0f,
+            0.9f,
+            0.5f
+        },
+        {
+            0f,
+            0.9f,
+            0.5f
+        },
         {
             0f,
             0.9f,
