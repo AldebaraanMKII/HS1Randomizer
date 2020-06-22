@@ -873,7 +873,7 @@ public class HS1RandomizeAll : MonoBehaviour
         //////////////////////////////// height
         female.customInfo.shapeValueBody[0] = UnityEngine.Random.Range(0.6f, 0.95f);
         //////////////////////////////// bust size
-        female.customInfo.shapeValueBody[1] = UnityEngine.Random.Range(1.15f, 1.32f);
+        female.customInfo.shapeValueBody[1] = UnityEngine.Random.Range(0.6f, 0.8f);
         //////////////////////////////// Breast height,
         female.customInfo.shapeValueBody[2] = UnityEngine.Random.Range(0.1f, 0.4f);
         //////////////////////////////// Breast direction
@@ -903,7 +903,7 @@ public class HS1RandomizeAll : MonoBehaviour
         ////////////////////////////////Neck thickness,
         female.customInfo.shapeValueBody[11] = UnityEngine.Random.Range(0.4f, 0.5f);
         ////////////////////////////////Thorax width,
-        female.customInfo.shapeValueBody[12] = UnityEngine.Random.Range(0.9f, 1f);
+        female.customInfo.shapeValueBody[12] = UnityEngine.Random.Range(0.5f, 0.6f);
         ////////////////////////////////Thorax thickness,
         female.customInfo.shapeValueBody[13] = UnityEngine.Random.Range(0.45f, 0.6f);
         ////////////////////////////////Chest width,
@@ -919,30 +919,32 @@ public class HS1RandomizeAll : MonoBehaviour
         ////////////////////////////////Pelvis width,
         female.customInfo.shapeValueBody[19] = UnityEngine.Random.Range(0.45f, 0.55f);
         ////////////////////////////////Pelvis thickness,
-        female.customInfo.shapeValueBody[20] = UnityEngine.Random.Range(0.95f, 1.1f);
+        female.customInfo.shapeValueBody[20] = UnityEngine.Random.Range(0.55f, 0.75f);
         ////////////////////////////////hips width,
-        female.customInfo.shapeValueBody[21] = UnityEngine.Random.Range(0.95f, 1.1f);
+        female.customInfo.shapeValueBody[21] = UnityEngine.Random.Range(0.55f, 0.75f);
         ////////////////////////////////hips thickness,
-        female.customInfo.shapeValueBody[22] = UnityEngine.Random.Range(0.95f, 1.1f);
+        female.customInfo.shapeValueBody[22] = UnityEngine.Random.Range(0.55f, 0.75f);
 
         ////////////////////////////////Butt,
-        female.customInfo.shapeValueBody[23] = UnityEngine.Random.Range(3.4f, 3.6f);
+        female.customInfo.shapeValueBody[23] = UnityEngine.Random.Range(0.8f, 1.2f);
         ////////////////////////////////Butt angle,
         female.customInfo.shapeValueBody[24] = UnityEngine.Random.Range(-0.2f, -0.15f);
         ////////////////////////////////thighs,
-        female.customInfo.shapeValueBody[25] = UnityEngine.Random.Range(1.90f, 2.1f);
+        female.customInfo.shapeValueBody[25] = UnityEngine.Random.Range(0.60f, 0.9f);
         ////////////////////////////////legs,
         female.customInfo.shapeValueBody[26] = UnityEngine.Random.Range(0.25f, 0.35f);
         ////////////////////////////////Calves,
-        female.customInfo.shapeValueBody[27] = UnityEngine.Random.Range(1.25f, 1.4f);
+        female.customInfo.shapeValueBody[27] = UnityEngine.Random.Range(0.6f, 0.8f);
         ////////////////////////////////ankles,
         female.customInfo.shapeValueBody[28] = UnityEngine.Random.Range(0.45f, 0.6f);
         ////////////////////////////////shoulders,
-        female.customInfo.shapeValueBody[29] = UnityEngine.Random.Range(0.7f, 0.9f);
+        female.customInfo.shapeValueBody[29] = UnityEngine.Random.Range(0.5f, 0.7f);
         ////////////////////////////////upper arms,
-        female.customInfo.shapeValueBody[30] = UnityEngine.Random.Range(0.65f, 0.8f);
+        female.customInfo.shapeValueBody[30] = UnityEngine.Random.Range(0.45f, 0.6f);
         ////////////////////////////////Lower arms,
-        female.customInfo.shapeValueBody[31] = UnityEngine.Random.Range(0.65f, 0.8f);
+        female.customInfo.shapeValueBody[31] = UnityEngine.Random.Range(0.45f, 0.6f);
+
+
 
         ////////////////////////////////skincolor
         int num11 = 0;
