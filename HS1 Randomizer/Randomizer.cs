@@ -37,6 +37,8 @@ public class HS1RandomizeAll : MonoBehaviour
     protected bool saveCard;
     protected int coordinateType;
 	
+	protected List<CharFemaleRandom.RandomFaceFemaleInfo> lstRandFaceF = new List<CharFemaleRandom.RandomFaceFemaleInfo>();
+
     void Awake()
     {
         StartCoroutine(WaitForCharsToExist());
@@ -48,7 +50,8 @@ public class HS1RandomizeAll : MonoBehaviour
         yield return new WaitUntil(() =>
             (cc = FindObjectOfType<CustomControl>()) != null
         );
-        female = cc.chainfo as CharFemale;
+        female = cc.chainfo as CharFemale;	
+		LoadAssets();
     }
 
     void Update()
@@ -62,19 +65,22 @@ public class HS1RandomizeAll : MonoBehaviour
         //////////////////////////////////////// Only face
         if (Input.GetKeyDown(KeyCode.Keypad2))
         {
-            RandomiseCharFace();
+            RandomiseCharFace(lstRandFaceF);
+			female.chaFile.ChangeCoordinateType((CharDefine.CoordinateType)coordinateType);
             female.Reload();
         }
         //////////////////////////////////////// Only body
         if (Input.GetKeyDown(KeyCode.Keypad3))
         {
             RandomiseCharBody();
+			female.chaFile.ChangeCoordinateType((CharDefine.CoordinateType)coordinateType);
             female.Reload();
         }
         //////////////////////////////////////// Body/Face
         if (Input.GetKeyDown(KeyCode.Keypad4))
         {
             RandomiseCharBodyFace();
+			female.chaFile.ChangeCoordinateType((CharDefine.CoordinateType)coordinateType);
             female.Reload();
         }
         //////////////////////////////////////// Clothes and accessories
@@ -96,7 +102,7 @@ public class HS1RandomizeAll : MonoBehaviour
     {
         if (female == null) return;
         RandomiseCharPersonality(female);
-        RandomiseCharFace();
+        RandomiseCharFace(lstRandFaceF);
         RandomiseCharBody();
         RandomiseCharClothing();
 
@@ -120,9 +126,42 @@ public class HS1RandomizeAll : MonoBehaviour
     }
 
 
-    void RandomiseCharFace()
+    void LoadAssets()
     {
-        if (female == null) return;
+		AssetBundleLoadAssetOperation assetBundleLoadAssetOperation = null;
+		string assetBundleName = "custom/face_randf.unity3d";
+		assetBundleLoadAssetOperation = AssetBundleManager.LoadAllAsset(assetBundleName, typeof(TextAsset));
+		if (assetBundleLoadAssetOperation != null && !assetBundleLoadAssetOperation.IsEmpty())
+		{
+			TextAsset[] allAssets = assetBundleLoadAssetOperation.GetAllAssets<TextAsset>();
+			TextAsset[] array = allAssets;
+			foreach (TextAsset ta in array)
+			{
+				CharFemaleRandom.RandomFaceFemaleInfo randomFaceFemaleInfo = new CharFemaleRandom.RandomFaceFemaleInfo();
+				randomFaceFemaleInfo.Load(ta);
+				lstRandFaceF.Add(randomFaceFemaleInfo);
+			}
+		}
+		AssetBundleManager.UnloadAssetBundle(assetBundleName);
+    }
+
+
+    void RandomiseCharFace(List<CharFemaleRandom.RandomFaceFemaleInfo> lstRandFace)
+    {
+        if (female == null) return;		
+		//4
+		//26
+		//9
+		int index = UnityEngine.Random.Range(0, 4);
+		int index22 = UnityEngine.Random.Range(0, 26);
+		int index23 = UnityEngine.Random.Range(0, 9);
+		//Array.Copy(lstRandFace[index].shapeValue, female.customInfo.shapeValueFace, lstRandFace[index].shapeValue.Length);
+		female.customInfo.headId = lstRandFace[index].headNo;
+		female.customInfo.texFaceId = lstRandFace[index22].baseTexNo;
+		female.customInfo.texFaceDetailId = lstRandFace[index23].detailTexNo;
+		// female.customInfo.faceDetailWeight = lstRandFace[index].detailWeight;
+		female.customInfo.faceDetailWeight = UnityEngine.Random.Range(0.1f, 0.8f);
+		
         ////////////////////////////////Overall Face Breadth,
         female.customInfo.shapeValueFace[0] = UnityEngine.Random.Range(0.35f, 0.45f);
         ////////////////////////////////Upper face depth,
@@ -598,14 +637,13 @@ public class HS1RandomizeAll : MonoBehaviour
                 list3.Add(item8.Key);
             }
         }
-        int index9 = UnityEngine.Random.Range(0, list3.Count);
+        // int index9 = UnityEngine.Random.Range(0, list3.Count);
+        int index9 = UnityEngine.Random.Range(0, 31);
         female.customInfo.matEyebrowId = list3[index9];
         female.customInfo.eyebrowColor.hsvDiffuse.Copy(new HsvColor(num2, num3, num4 * 0.7f));
         female.customInfo.eyebrowColor.hsvSpecular.Copy(new HsvColor(num5, num6, num7));
         female.customInfo.eyebrowColor.specularIntensity = 0f;
         female.customInfo.eyebrowColor.specularSharpness = 0f;
-        /////////////////////////////////// heterochromia chance (5% default)		
-        bool flag2 = (UnityEngine.Random.Range(0, 100) < 90) ? true : false;
         //////////////////////////////// eyes
         Dictionary<int, ListTypeMaterial> femaleMaterialList2 = female.ListInfo.GetFemaleMaterialList(CharaListInfo.TypeFemaleMaterial.cf_m_eyeball);
         List<int> list4 = new List<int>();
@@ -622,15 +660,16 @@ public class HS1RandomizeAll : MonoBehaviour
         female.customInfo.matEyeRId = list4[index10];
         //////////////////////////////// eye color left
         // HsvColor src = new HsvColor(UnityEngine.Random.Range(0f, 359f), 0.25f, 0.5f);
-        HsvColor src = new HsvColor(UnityEngine.Random.Range(0f, 359f), UnityEngine.Random.Range(0.25f, 0.90f), UnityEngine.Random.Range(0.3f, 0.90f));
+        HsvColor src = new HsvColor(UnityEngine.Random.Range(0f, 359f), UnityEngine.Random.Range(0.25f, 0.90f), UnityEngine.Random.Range(0.6f, 0.90f));
         HsvColor src2 = new HsvColor(0f, 0f, 0.8f);
         female.customInfo.eyeLColor.hsvDiffuse.Copy(src);
         female.customInfo.eyeLColor.hsvSpecular.Copy(src2);
-        //////////////////////////////// heterochromia
+        /////////////////////////////////// heterochromia chance (5% default)		
+        bool flag2 = (UnityEngine.Random.Range(0, 100) < 90) ? true : false;
         if (!flag2)
         {
             // src = new HsvColor(UnityEngine.Random.Range(0f, 359f), 0.25f, 0.5f);
-            src = new HsvColor(UnityEngine.Random.Range(0f, 359f), UnityEngine.Random.Range(0.25f, 0.90f), UnityEngine.Random.Range(0.3f, 0.90f));
+            src = new HsvColor(UnityEngine.Random.Range(0f, 359f), UnityEngine.Random.Range(0.25f, 0.90f), UnityEngine.Random.Range(0.6f, 0.90f));
             src2 = new HsvColor(0f, 0f, 0.8f);
         }
         //////////////////////////////// eye color left
@@ -714,7 +753,8 @@ public class HS1RandomizeAll : MonoBehaviour
 
         //////////////////////////////// lips
         Dictionary<int, ListTypeTexture> femaleTextureList4 = female.ListInfo.GetFemaleTextureList(CharaListInfo.TypeFemaleTexture.cf_t_lip);
-        int index13 = UnityEngine.Random.Range(0, femaleTextureList4.Count);
+        // int index13 = UnityEngine.Random.Range(0, femaleTextureList4.Count);
+        int index13 = UnityEngine.Random.Range(0, 7);
         female.femaleCustomInfo.texLipId = femaleTextureList4.ElementAt(index13).Key;
         float[,] array6 = new float[3, 3]
         {
@@ -752,7 +792,8 @@ public class HS1RandomizeAll : MonoBehaviour
 
         //////////////////////////////// eyelashes
         Dictionary<int, ListTypeMaterial> femaleMaterialList3 = female.ListInfo.GetFemaleMaterialList(CharaListInfo.TypeFemaleMaterial.cf_m_eyelashes);
-        int index15 = UnityEngine.Random.Range(0, femaleMaterialList3.Count);
+        // int index15 = UnityEngine.Random.Range(0, femaleMaterialList3.Count); // needs to be edited or else it will load mods custom eyelashes which fucks up the faces
+        int index15 = UnityEngine.Random.Range(0, 5);
         female.femaleCustomInfo.matEyelashesId = femaleMaterialList3.ElementAt(index15).Key;
         female.femaleCustomInfo.eyelashesColor.hsvDiffuse.Copy(new HsvColor(num2, num3, num4 * 0.7f));
         female.femaleCustomInfo.eyelashesColor.hsvSpecular.Copy(new HsvColor(num5, num6, num7));
@@ -1173,7 +1214,7 @@ public class HS1RandomizeAll : MonoBehaviour
     void RandomiseCharBodyFace()
     {
         if (female == null) return;
-        RandomiseCharFace();
+        RandomiseCharFace(lstRandFaceF);
         RandomiseCharBody();
     }
 
