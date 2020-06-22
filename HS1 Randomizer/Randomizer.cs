@@ -1,12 +1,12 @@
+using Manager;
 using IllusionPlugin;
-using System.Collections;
-using UnityEngine;
-using UnityEngine.SceneManagement;
 using System;  /////
+using System.Collections;
 using System.Collections.Generic;  /////
 using System.Linq;   ////
-
-
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using RandomSearch;
 
 
 public class HSCharRandom : IPlugin
@@ -33,7 +33,10 @@ public class HSCharRandom : IPlugin
 public class HS1RandomizeAll : MonoBehaviour
 {
     private CharFemale female;
-
+    public RandomPhotoCtrlPanel randPhotoCtrl;
+    protected bool saveCard;
+    protected int coordinateType;
+	
     void Awake()
     {
         StartCoroutine(WaitForCharsToExist());
@@ -54,31 +57,32 @@ public class HS1RandomizeAll : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Keypad1))
         {
             RandomiseCharAll();
-		    female.Reload();
+            //female.Reload();
         }
         //////////////////////////////////////// Only face
         if (Input.GetKeyDown(KeyCode.Keypad2))
         {
             RandomiseCharFace();
-		    female.Reload();
+            female.Reload();
         }
         //////////////////////////////////////// Only body
         if (Input.GetKeyDown(KeyCode.Keypad3))
         {
             RandomiseCharBody();
-		    female.Reload();
+            female.Reload();
         }
         //////////////////////////////////////// Body/Face
         if (Input.GetKeyDown(KeyCode.Keypad4))
         {
             RandomiseCharBodyFace();
-		    female.Reload();
+            female.Reload();
         }
         //////////////////////////////////////// Clothes and accessories
         if (Input.GetKeyDown(KeyCode.Keypad5))
         {
-            RandomiseCharClothing();
-		    female.Reload();
+            RandomiseCharClothing();        
+			female.chaFile.ChangeCoordinateType((CharDefine.CoordinateType)coordinateType);
+            female.Reload();
         }
         //////////////////////////////////////// Save card
         if (Input.GetKeyDown(KeyCode.Keypad6))
@@ -96,22 +100,22 @@ public class HS1RandomizeAll : MonoBehaviour
         RandomiseCharBody();
         RandomiseCharClothing();
 
-        //female.chaFile.ChangeCoordinateType((CharDefine.CoordinateType)coordinateType);
-        //female.Reload();
+        female.chaFile.ChangeCoordinateType((CharDefine.CoordinateType)coordinateType);
+        female.Reload();
         //UpdateCharaInfo();
-        //saveCard = false;
-        //PersonalityIdInfo personalityInfo = female.ListInfo.GetPersonalityInfo(female.chaFile.customInfo.personality);
-        //int ptn = personalityInfo.randAnmPtn[UnityEngine.Random.Range(0, 3)];
-        //randPhotoCtrl.ChangeCustomAnm(ptn);
-        //female.ChangeEyesPtn(personalityInfo.randEyesPtn);
-        //female.ChangeMouthPtn(personalityInfo.randMouthPtn);
-        //Singleton<Voice>.Instance.StopAll();
-        //Transform transform = Singleton<Voice>.Instance.Play(female.chaFile.customInfo.personality, personalityInfo.assetBundleName, personalityInfo.randomVoice, female.chaFile.customInfo.voicePitch);
-        //if ((bool)transform)
-        //{
-        //    female.SetVoice(transform);
-        //}
-        //return;
+        saveCard = false;
+        PersonalityIdInfo personalityInfo = female.ListInfo.GetPersonalityInfo(female.chaFile.customInfo.personality);
+        int ptn = personalityInfo.randAnmPtn[UnityEngine.Random.Range(0, 3)];
+        randPhotoCtrl.ChangeCustomAnm(ptn);
+        female.ChangeEyesPtn(personalityInfo.randEyesPtn);
+        female.ChangeMouthPtn(personalityInfo.randMouthPtn);
+        Singleton<Voice>.Instance.StopAll();
+        Transform transform = Singleton<Voice>.Instance.Play(female.chaFile.customInfo.personality, personalityInfo.assetBundleName, personalityInfo.randomVoice, female.chaFile.customInfo.voicePitch);
+        if ((bool)transform)
+        {
+            female.SetVoice(transform);
+        }
+        return;
         // female.chaCustom.UpdateShapeBodyValueFromCustomInfo();
     }
 
@@ -780,6 +784,14 @@ public class HS1RandomizeAll : MonoBehaviour
         female.femaleCustomInfo.underhairColor.specularIntensity = num8;
         female.femaleCustomInfo.underhairColor.specularSharpness = num9;
 
+        //////////////////////////////// elf ears	
+        bool flag3 = (UnityEngine.Random.Range(0, 100) < 90) ? true : false;
+        if (!flag3)
+        {
+            female.customInfo.shapeValueFace[64] = UnityEngine.Random.Range(0.1f, 0.9f);
+            female.customInfo.shapeValueFace[65] = UnityEngine.Random.Range(0.8f, 0.9f);
+        }
+
         //female.chaCustom.UpdateShapeBodyValueFromCustomInfo();
     }
 
@@ -1247,6 +1259,7 @@ public class HS1RandomizeAll : MonoBehaviour
     }
 
 
+
     ////////////////////////////////////////////////////////////////////////////////////////////////
     //public static void RandBody2(CharFemale female, List<CharFemaleRandom.RandomFaceFemaleInfo> lstRandFace)
     //{
@@ -1258,13 +1271,7 @@ public class HS1RandomizeAll : MonoBehaviour
     //    female.customInfo.texFaceDetailId = lstRandFace[index].detailTexNo;
     //    female.customInfo.faceDetailWeight = lstRandFace[index].detailWeight;
 
-    //////////////////////////////// elf ears
-    //if (elf)
-    //{
-    //	female.customInfo.shapeValueFace[64] = UnityEngine.Random.Range(0.1f, 0.9f);
-    //	female.customInfo.shapeValueFace[65] = UnityEngine.Random.Range(0.8f, 0.9f);
-    //}
-
+    ////////////////////////////////////////////////////////////////
 
 
 
