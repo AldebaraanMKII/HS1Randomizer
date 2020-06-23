@@ -4,6 +4,7 @@ using System;  /////
 using System.Collections;
 using System.Collections.Generic;  /////
 using System.Linq;   ////
+using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using RandomSearch;
@@ -36,8 +37,8 @@ public class HS1RandomizeAll : MonoBehaviour
     public RandomPhotoCtrlPanel randPhotoCtrl;
     protected bool saveCard;
     protected int coordinateType;
-	
-	protected List<CharFemaleRandom.RandomFaceFemaleInfo> lstRandFaceF = new List<CharFemaleRandom.RandomFaceFemaleInfo>();
+
+    protected List<CharFemaleRandom.RandomFaceFemaleInfo> lstRandFaceF = new List<CharFemaleRandom.RandomFaceFemaleInfo>();
 
     void Awake()
     {
@@ -50,8 +51,8 @@ public class HS1RandomizeAll : MonoBehaviour
         yield return new WaitUntil(() =>
             (cc = FindObjectOfType<CustomControl>()) != null
         );
-        female = cc.chainfo as CharFemale;	
-		LoadAssets();
+        female = cc.chainfo as CharFemale;
+        LoadAssets();
     }
 
     void Update()
@@ -66,34 +67,34 @@ public class HS1RandomizeAll : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Keypad2))
         {
             RandomiseCharFace(lstRandFaceF);
-			female.chaFile.ChangeCoordinateType((CharDefine.CoordinateType)coordinateType);
+            female.chaFile.ChangeCoordinateType((CharDefine.CoordinateType)coordinateType);
             female.Reload();
         }
         //////////////////////////////////////// Only body
         if (Input.GetKeyDown(KeyCode.Keypad3))
         {
             RandomiseCharBody();
-			female.chaFile.ChangeCoordinateType((CharDefine.CoordinateType)coordinateType);
+            female.chaFile.ChangeCoordinateType((CharDefine.CoordinateType)coordinateType);
             female.Reload();
         }
         //////////////////////////////////////// Body/Face
         if (Input.GetKeyDown(KeyCode.Keypad4))
         {
             RandomiseCharBodyFace();
-			female.chaFile.ChangeCoordinateType((CharDefine.CoordinateType)coordinateType);
+            female.chaFile.ChangeCoordinateType((CharDefine.CoordinateType)coordinateType);
             female.Reload();
         }
         //////////////////////////////////////// Clothes and accessories
         if (Input.GetKeyDown(KeyCode.Keypad5))
         {
-            RandomiseCharClothing();        
-			female.chaFile.ChangeCoordinateType((CharDefine.CoordinateType)coordinateType);
+            RandomiseCharClothing();
+            female.chaFile.ChangeCoordinateType((CharDefine.CoordinateType)coordinateType);
             female.Reload();
         }
         //////////////////////////////////////// Save card
         if (Input.GetKeyDown(KeyCode.Keypad6))
         {
-            //SaveChar();
+            CustomMenu.SubMenuBase.ExecuteSaveNew();
         }
         ////////////////////////////////////////
     }
@@ -128,40 +129,40 @@ public class HS1RandomizeAll : MonoBehaviour
 
     void LoadAssets()
     {
-		AssetBundleLoadAssetOperation assetBundleLoadAssetOperation = null;
-		string assetBundleName = "custom/face_randf.unity3d";
-		assetBundleLoadAssetOperation = AssetBundleManager.LoadAllAsset(assetBundleName, typeof(TextAsset));
-		if (assetBundleLoadAssetOperation != null && !assetBundleLoadAssetOperation.IsEmpty())
-		{
-			TextAsset[] allAssets = assetBundleLoadAssetOperation.GetAllAssets<TextAsset>();
-			TextAsset[] array = allAssets;
-			foreach (TextAsset ta in array)
-			{
-				CharFemaleRandom.RandomFaceFemaleInfo randomFaceFemaleInfo = new CharFemaleRandom.RandomFaceFemaleInfo();
-				randomFaceFemaleInfo.Load(ta);
-				lstRandFaceF.Add(randomFaceFemaleInfo);
-			}
-		}
-		AssetBundleManager.UnloadAssetBundle(assetBundleName);
+        AssetBundleLoadAssetOperation assetBundleLoadAssetOperation = null;
+        string assetBundleName = "custom/face_randf.unity3d";
+        assetBundleLoadAssetOperation = AssetBundleManager.LoadAllAsset(assetBundleName, typeof(TextAsset));
+        if (assetBundleLoadAssetOperation != null && !assetBundleLoadAssetOperation.IsEmpty())
+        {
+            TextAsset[] allAssets = assetBundleLoadAssetOperation.GetAllAssets<TextAsset>();
+            TextAsset[] array = allAssets;
+            foreach (TextAsset ta in array)
+            {
+                CharFemaleRandom.RandomFaceFemaleInfo randomFaceFemaleInfo = new CharFemaleRandom.RandomFaceFemaleInfo();
+                randomFaceFemaleInfo.Load(ta);
+                lstRandFaceF.Add(randomFaceFemaleInfo);
+            }
+        }
+        AssetBundleManager.UnloadAssetBundle(assetBundleName);
     }
 
 
     void RandomiseCharFace(List<CharFemaleRandom.RandomFaceFemaleInfo> lstRandFace)
     {
-        if (female == null) return;		
-		//4
-		//26
-		//9
-		int index = UnityEngine.Random.Range(0, 4);
-		int index22 = UnityEngine.Random.Range(0, 26);
-		int index23 = UnityEngine.Random.Range(0, 9);
-		//Array.Copy(lstRandFace[index].shapeValue, female.customInfo.shapeValueFace, lstRandFace[index].shapeValue.Length);
-		female.customInfo.headId = lstRandFace[index].headNo;
-		female.customInfo.texFaceId = lstRandFace[index22].baseTexNo;
-		female.customInfo.texFaceDetailId = lstRandFace[index23].detailTexNo;
-		// female.customInfo.faceDetailWeight = lstRandFace[index].detailWeight;
-		female.customInfo.faceDetailWeight = UnityEngine.Random.Range(0.1f, 0.8f);
-		
+        if (female == null) return;
+        //4
+        //26
+        //9
+        int index = UnityEngine.Random.Range(0, 4);
+        int index22 = UnityEngine.Random.Range(0, 26);
+        int index23 = UnityEngine.Random.Range(0, 9);
+        //Array.Copy(lstRandFace[index].shapeValue, female.customInfo.shapeValueFace, lstRandFace[index].shapeValue.Length);
+        female.customInfo.headId = lstRandFace[index].headNo;
+        female.customInfo.texFaceId = lstRandFace[index22].baseTexNo;
+        female.customInfo.texFaceDetailId = lstRandFace[index23].detailTexNo;
+        // female.customInfo.faceDetailWeight = lstRandFace[index].detailWeight;
+        female.customInfo.faceDetailWeight = UnityEngine.Random.Range(0.1f, 0.8f);
+
         ////////////////////////////////Overall Face Breadth,
         female.customInfo.shapeValueFace[0] = UnityEngine.Random.Range(0.35f, 0.45f);
         ////////////////////////////////Upper face depth,
@@ -198,7 +199,7 @@ public class HS1RandomizeAll : MonoBehaviour
         female.customInfo.shapeValueFace[14] = UnityEngine.Random.Range(0.5f, 0.8f);
         ////////////////////////////////Lower Cheek Width
         female.customInfo.shapeValueFace[15] = UnityEngine.Random.Range(0.5f, 0.8f);
-		
+
         ////////////////////////////////Upper Cheek Height
         female.customInfo.shapeValueFace[16] = UnityEngine.Random.Range(0.2f, 0.6f);
         ////////////////////////////////Upper Cheek Depth
@@ -219,10 +220,10 @@ public class HS1RandomizeAll : MonoBehaviour
 
         ////////////////////////////////Eye Height
         float Eye_Height = UnityEngine.Random.Range(0.25f, 0.5f);
-        female.customInfo.shapeValueFace[24] = Eye_Height
+        female.customInfo.shapeValueFace[24] = Eye_Height;
         ////////////////////////////////Eyebrow Height
         float Eyebrow_Height = UnityEngine.Random.Range(0.3f, 0.5f);
-        female.customInfo.shapeValueFace[19] = Eye_Height - Eyebrow_Height
+        female.customInfo.shapeValueFace[19] = Eye_Height - Eyebrow_Height;
         ////////////////////////////////Eye Spacing
         female.customInfo.shapeValueFace[25] = UnityEngine.Random.Range(0.1f, 0.25f);
         ////////////////////////////////Eye Depth
@@ -583,23 +584,23 @@ public class HS1RandomizeAll : MonoBehaviour
         //break;
         //}
         // int index5 = UnityEngine.Random.Range(0, list.Count);
-		//46 base
-		//53 coiffure
+        //46 base
+        //53 coiffure
         int index5 = UnityEngine.Random.Range(0, 99);
         if ("1" == femaleFbxList[list[index5]].Etc[0])
         {
             flag = true;
         }
         female.customInfo.hairId[0] = list[index5];
-		
+
         if (!flag)
         {
             //////////////////////////////// hairType (Front)
             Dictionary<int, ListTypeFbx> femaleFbxList2 = female.ListInfo.GetFemaleFbxList(CharaListInfo.TypeFemaleFbx.cf_f_hairF);
             // int index6 = UnityEngine.Random.Range(1, femaleFbxList2.Count);
-		    //41 base
-		    //46 coiffure
-		    //27 useless stuff
+            //41 base
+            //46 coiffure
+            //27 useless stuff
             int index6 = UnityEngine.Random.Range(1, 88);
             female.customInfo.hairId[1] = femaleFbxList2.ElementAt(index6).Key;
 
@@ -608,14 +609,14 @@ public class HS1RandomizeAll : MonoBehaviour
             {
                 Dictionary<int, ListTypeFbx> femaleFbxList3 = female.ListInfo.GetFemaleFbxList(CharaListInfo.TypeFemaleFbx.cf_f_hairS);
                 // int index7 = UnityEngine.Random.Range(1, femaleFbxList3.Count);
-				//7 base 
-				//10 crap
-				//23 coiffure
+                //7 base 
+                //10 crap
+                //23 coiffure
                 int index7 = UnityEngine.Random.Range(1, 40);
                 if (index7 >= 8 && index7 <= 17)
                 {
-					index7 = index7 + 10;
-				}
+                    index7 = index7 + 10;
+                }
                 female.customInfo.hairId[2] = femaleFbxList3.ElementAt(index7).Key;
             }
             else
@@ -886,7 +887,7 @@ public class HS1RandomizeAll : MonoBehaviour
         //////////////////////////////// Breast angle,
         female.customInfo.shapeValueBody[5] = UnityEngine.Random.Range(0.35f, 0.6f);
         //////////////////////////////// Breast lenght,
-        female.customInfo.shapeValueBody[6] = UnityEngine.Random.Range(0f, 0.4f);
+        female.customInfo.shapeValueBody[6] = UnityEngine.Random.Range(0.2f, 0.5f);
         //////////////////////////////// Areola puffiness,
         female.customInfo.shapeValueBody[7] = UnityEngine.Random.Range(0.2f, 0.8f);
         //////////////////////////////// Nipple width,
@@ -1336,6 +1337,61 @@ public class HS1RandomizeAll : MonoBehaviour
     }
 
 
+	//public virtual void ExecuteSaveNew()
+	//{
+	//	if (!(null == chaInfo) && chaInfo.chaFile != null)
+	//	{
+	//		string empty = string.Empty;
+	//		empty = ((chaInfo.Sex != 0) ? ("charaF_" + DateTime.Now.ToString("yyyyMMddHHmmssfff")) : ("charaM_" + DateTime.Now.ToString("yyyyMMddHHmmssfff")));
+	//		if (chaInfo.Sex == 1)
+	//		{
+	//			CharFileInfoParameterFemale charFileInfoParameterFemale = chaInfo.chaFile.parameterInfo as CharFileInfoParameterFemale;
+	//			charFileInfoParameterFemale.InitParameter = true;
+	//			Singleton<Info>.Instance.InitState(charFileInfoParameterFemale, chaInfo.customInfo.personality, _isForce: true);
+	//		}
+	//		customControl.CustomSaveCharaAssist(empty);
+	//		FileInfo fileInfo = new FileInfo();
+	//		fileInfo.no = 0;
+	//		fileInfo.time = DateTime.Now;
+	//		fileInfo.FileName = empty;
+	//		fileInfo.FullPath = chaInfo.chaFile.ConvertCharaFilePath(empty);
+	//		fileInfo.CharaName = customInfo.name;
+	//		fileInfo.personality = customInfo.personality;
+	//		fileInfo.limited = false;
+	//		lstFileInfo.Add(fileInfo);
+	//		CreateListObject();
+	//		UpdateSort();
+	//	}
+	//}
+	//
+	//
+
+    public void Load()
+    {
+        var config = Config.Load();
+        
+        var path = GetCurrentlyEditedBoneModFilePath();
+
+        if (path == null)
+            return;
+
+        if (File.Exists(path))
+        {
+            // _log.Info("Loading: " + path);
+
+            var bones = ReadBones(path);
+
+            if (bones.Length == 0)
+                return;
+
+            if (HasGUI)
+                Unload();
+
+            StartCoroutine(CreateGUI(config, bones));
+
+            HasGUI = true;
+        }
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     //public static void RandBody2(CharFemale female, List<CharFemaleRandom.RandomFaceFemaleInfo> lstRandFace)
