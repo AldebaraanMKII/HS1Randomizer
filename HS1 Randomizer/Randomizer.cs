@@ -174,7 +174,7 @@ public class HS1RandomizeAll : MonoBehaviour
         female.customInfo.shapeValueFace[4] = UnityEngine.Random.Range(0.1f, 0.4f);
 
         ////////////////////////////////Jaw Width
-        female.customInfo.shapeValueFace[5] = UnityEngine.Random.Range(0.3f, 0.45f);
+        female.customInfo.shapeValueFace[5] = UnityEngine.Random.Range(0.2f, 0.35f);
         ////////////////////////////////Jaw Height
         female.customInfo.shapeValueFace[6] = UnityEngine.Random.Range(0.2f, 0.5f);
         ////////////////////////////////Jaw Depth
@@ -195,9 +195,10 @@ public class HS1RandomizeAll : MonoBehaviour
         ////////////////////////////////Lower Cheek Height
         female.customInfo.shapeValueFace[13] = UnityEngine.Random.Range(0.1f, 0.3f);
         ////////////////////////////////Lower Cheek Depth
-        female.customInfo.shapeValueFace[14] = UnityEngine.Random.Range(0.15f, 0.4f);
+        female.customInfo.shapeValueFace[14] = UnityEngine.Random.Range(0.5f, 0.8f);
         ////////////////////////////////Lower Cheek Width
-        female.customInfo.shapeValueFace[15] = UnityEngine.Random.Range(0.1f, 0.4f);
+        female.customInfo.shapeValueFace[15] = UnityEngine.Random.Range(0.5f, 0.8f);
+		
         ////////////////////////////////Upper Cheek Height
         female.customInfo.shapeValueFace[16] = UnityEngine.Random.Range(0.2f, 0.6f);
         ////////////////////////////////Upper Cheek Depth
@@ -206,8 +207,6 @@ public class HS1RandomizeAll : MonoBehaviour
         female.customInfo.shapeValueFace[18] = UnityEngine.Random.Range(0.2f, 0.5f);
 
 
-        ////////////////////////////////Eyebrow Height
-        female.customInfo.shapeValueFace[19] = UnityEngine.Random.Range(0.05f, 0.3f);
         ////////////////////////////////Eyebrow Spacing
         female.customInfo.shapeValueFace[20] = UnityEngine.Random.Range(0.2f, 0.4f);
         ////////////////////////////////Eyebrow Angle
@@ -219,39 +218,43 @@ public class HS1RandomizeAll : MonoBehaviour
 
 
         ////////////////////////////////Eye Height
-        female.customInfo.shapeValueFace[24] = UnityEngine.Random.Range(0.25f, 0.45f);
+        float Eye_Height = UnityEngine.Random.Range(0.25f, 0.5f);
+        female.customInfo.shapeValueFace[24] = Eye_Height
+        ////////////////////////////////Eyebrow Height
+        float Eyebrow_Height = UnityEngine.Random.Range(0.3f, 0.5f);
+        female.customInfo.shapeValueFace[19] = Eye_Height - Eyebrow_Height
         ////////////////////////////////Eye Spacing
-        female.customInfo.shapeValueFace[25] = UnityEngine.Random.Range(0.15f, 0.3f);
+        female.customInfo.shapeValueFace[25] = UnityEngine.Random.Range(0.1f, 0.25f);
         ////////////////////////////////Eye Depth
         female.customInfo.shapeValueFace[26] = UnityEngine.Random.Range(0.1f, 0.5f);
         ////////////////////////////////Eye Width
         female.customInfo.shapeValueFace[27] = UnityEngine.Random.Range(0.6f, 0.8f);
         ////////////////////////////////Eye Openness
-        female.customInfo.shapeValueFace[28] = UnityEngine.Random.Range(0.4f, 0.7f);
+        female.customInfo.shapeValueFace[28] = UnityEngine.Random.Range(0.5f, 0.7f);
         ////////////////////////////////Eye Angle 1
         female.customInfo.shapeValueFace[29] = UnityEngine.Random.Range(0.45f, 0.55f);
         ////////////////////////////////Eye Angle 2
-        female.customInfo.shapeValueFace[30] = UnityEngine.Random.Range(0.2f, 0.45f);
+        female.customInfo.shapeValueFace[30] = UnityEngine.Random.Range(0.4f, 0.7f);
 
         ////////////////////////////////Inner Corner Distance
-        female.customInfo.shapeValueFace[31] = UnityEngine.Random.Range(0.5f, 0.7f);
+        female.customInfo.shapeValueFace[31] = UnityEngine.Random.Range(0.5f, 0.8f);
         ////////////////////////////////Outer Corner Distance
         female.customInfo.shapeValueFace[32] = UnityEngine.Random.Range(0.5f, 0.7f);
         ////////////////////////////////Inner Corner Height
-        female.customInfo.shapeValueFace[33] = UnityEngine.Random.Range(0.3f, 0.6f);
+        female.customInfo.shapeValueFace[33] = UnityEngine.Random.Range(0.5f, 0.8f);
         ////////////////////////////////Outer Corner Height
-        female.customInfo.shapeValueFace[34] = UnityEngine.Random.Range(0.6f, 0.95f);
+        female.customInfo.shapeValueFace[34] = UnityEngine.Random.Range(0.3f, 0.8f);
 
         ////////////////////////////////Eyelid Shape 1
-        female.customInfo.shapeValueFace[35] = UnityEngine.Random.Range(0.4f, 0.6f);
+        female.customInfo.shapeValueFace[35] = UnityEngine.Random.Range(0.9f, 1.3f);
         ////////////////////////////////Eyelid Shape 2
-        female.customInfo.shapeValueFace[36] = UnityEngine.Random.Range(0.1f, 0.3f);
+        female.customInfo.shapeValueFace[36] = UnityEngine.Random.Range(0.1f, 0.2f);
         ////////////////////////////////Pupil Pos
         female.customInfo.shapeValueFace[37] = UnityEngine.Random.Range(0.4f, 0.5f);
         ////////////////////////////////Pupil Width
-        female.customInfo.shapeValueFace[38] = UnityEngine.Random.Range(0.45f, 0.55f);
+        female.customInfo.shapeValueFace[38] = UnityEngine.Random.Range(0.45f, 0.6f);
         ////////////////////////////////Pupil Height
-        female.customInfo.shapeValueFace[39] = UnityEngine.Random.Range(0.50f, 0.60f);
+        female.customInfo.shapeValueFace[39] = UnityEngine.Random.Range(0.50f, 0.6f);
 
         ////////////////////////////////Nose Height
         female.customInfo.shapeValueFace[40] = UnityEngine.Random.Range(0.5f, 0.7f);
@@ -300,7 +303,7 @@ public class HS1RandomizeAll : MonoBehaviour
         ////////////////////////////////Lower Lip Thickness
         female.customInfo.shapeValueFace[60] = UnityEngine.Random.Range(0.1f, 0.3f);
         ////////////////////////////////Corner Shape
-        female.customInfo.shapeValueFace[61] = UnityEngine.Random.Range(0.2f, 0.5f);
+        female.customInfo.shapeValueFace[61] = UnityEngine.Random.Range(0.1f, 0.5f);
 
         ////////////////////////////////Ear Size
         female.customInfo.shapeValueFace[62] = UnityEngine.Random.Range(0.4f, 0.6f);
