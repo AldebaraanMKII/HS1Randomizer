@@ -698,11 +698,11 @@ public class HS1RandomizeAll : MonoBehaviour
             num8 = 0.6f;
             num9 = 0.6f;
 		  }
+          female.femaleCustomInfo.nailColor.hsvDiffuse.Copy(new HsvColor(num2, num3, num4));
+          female.femaleCustomInfo.nailColor.hsvSpecular.Copy(new HsvColor(num5, num6, num7));
+          female.femaleCustomInfo.nailColor.specularIntensity = num8;
+          female.femaleCustomInfo.nailColor.specularSharpness = num9;
 		}
-        female.femaleCustomInfo.nailColor.hsvDiffuse.Copy(new HsvColor(num2, num3, num4));
-        female.femaleCustomInfo.nailColor.hsvSpecular.Copy(new HsvColor(num5, num6, num7));
-        female.femaleCustomInfo.nailColor.specularIntensity = num8;
-        female.femaleCustomInfo.nailColor.specularSharpness = num9;
 		
 
 
@@ -740,23 +740,39 @@ public class HS1RandomizeAll : MonoBehaviour
         female.customInfo.matEyeRId = list4[index10];
         //////////////////////////////// eye color left
         // HsvColor src = new HsvColor(UnityEngine.Random.Range(0f, 359f), 0.25f, 0.5f);
-        HsvColor src = new HsvColor(UnityEngine.Random.Range(0f, 359f), UnityEngine.Random.Range(0.25f, 0.90f), UnityEngine.Random.Range(0.6f, 0.90f));
-        HsvColor src2 = new HsvColor(0f, 0f, 0.8f);
-        female.customInfo.eyeLColor.hsvDiffuse.Copy(src);
-        female.customInfo.eyeLColor.hsvSpecular.Copy(src2);
-        /////////////////////////////////// heterochromia chance (5% default)		
-		int heterochromia_chance = FaceSettings["heterochromia_chance"];
-        // bool flag2 = (UnityEngine.Random.Range(0, 100) < heterochromia_chance) ? true : false;
-        if (UnityEngine.Random.Range(0, 100) < heterochromia_chance)
-        {
-            // src = new HsvColor(UnityEngine.Random.Range(0f, 359f), 0.25f, 0.5f);
-            src = new HsvColor(UnityEngine.Random.Range(0f, 359f), UnityEngine.Random.Range(0.25f, 0.90f), UnityEngine.Random.Range(0.6f, 0.90f));
-            src2 = new HsvColor(0f, 0f, 0.8f);
-        }
-        //////////////////////////////// eye color left
-        female.customInfo.eyeRColor.hsvDiffuse.Copy(src);
-        female.customInfo.eyeRColor.hsvSpecular.Copy(src2);
-
+		int eyes_match_hair_color_chance = FaceSettings["eyes_match_hair_color_chance"];
+		if (UnityEngine.Random.Range(0, 100) < eyes_match_hair_color_chance)
+		{
+          HsvColor src = new HsvColor(num2, num3, num4);
+          HsvColor src2 = new HsvColor(num5, num6, num7);
+          female.customInfo.eyeLColor.hsvDiffuse.Copy(src);
+          female.customInfo.eyeLColor.hsvSpecular.Copy(src2);
+		  
+          // female.customInfo.hairColor[0].hsvDiffuse.Copy(new HsvColor(num2, num3, num4));
+          // female.customInfo.hairColor[0].hsvSpecular.Copy(new HsvColor(num5, num6, num7));
+          // female.customInfo.hairColor[0].specularIntensity = num8;
+          // female.customInfo.hairColor[0].specularSharpness = num9;
+		}
+		else
+		{
+          HsvColor src = new HsvColor(UnityEngine.Random.Range(0f, 359f), UnityEngine.Random.Range(0.25f, 0.90f), UnityEngine.Random.Range(0.6f, 0.90f));
+          HsvColor src2 = new HsvColor(0f, 0f, 0.8f);
+          female.customInfo.eyeLColor.hsvDiffuse.Copy(src);
+          female.customInfo.eyeLColor.hsvSpecular.Copy(src2);
+          /////////////////////////////////// heterochromia chance (5% default)		
+		  int heterochromia_chance = FaceSettings["heterochromia_chance"];
+          // bool flag2 = (UnityEngine.Random.Range(0, 100) < heterochromia_chance) ? true : false;
+          if (UnityEngine.Random.Range(0, 100) < heterochromia_chance)
+          {
+              // src = new HsvColor(UnityEngine.Random.Range(0f, 359f), 0.25f, 0.5f);
+              src = new HsvColor(UnityEngine.Random.Range(0f, 359f), UnityEngine.Random.Range(0.25f, 0.90f), UnityEngine.Random.Range(0.6f, 0.90f));
+              src2 = new HsvColor(0f, 0f, 0.8f);
+          }
+          //////////////////////////////// eye color left
+          female.customInfo.eyeRColor.hsvDiffuse.Copy(src);
+          female.customInfo.eyeRColor.hsvSpecular.Copy(src2);
+		}
+		
         //////////////////////////////// eye shadow
 		int eye_shadow_chance = FaceSettings["eye_shadow_chance"];
         if (UnityEngine.Random.Range(0, 100) < eye_shadow_chance)
@@ -950,19 +966,19 @@ public class HS1RandomizeAll : MonoBehaviour
         JSONNode data = JSON.Parse(jsonString);
 		JSONNode BodyPresets = data["BodyPresets"];
 		
-		//gets a random preset from the list
+		////gets a random preset from the list
 		var randompreset = BodyPresets[UnityEngine.Random.Range(0, BodyPresets.Count)];
-		JSONNode preset = BodyPresets[randompreset];
-
-        float min1 = preset["height"]["x"];
-        float min2 = preset["upper_arms"]["x"];
-        float min3 = preset["lower_arms"]["x"];
+		// JSONNode preset = BodyPresets[randompreset];
 		
-        float max1 = preset["height"]["y"];
-        float max2 = preset["upper_arms"]["y"];
-        float max3 = preset["lower_arms"]["y"];
+        float min1 = randompreset["height"]["x"];
+        float min2 = randompreset["upper_arms"]["x"];
+        float min3 = randompreset["lower_arms"]["x"];
 		
-		// applies the values
+        float max1 = randompreset["height"]["y"];
+        float max2 = randompreset["upper_arms"]["y"];
+        float max3 = randompreset["lower_arms"]["y"];
+		
+		//// applies the values
         female.customInfo.shapeValueBody[0] = UnityEngine.Random.Range(min1, max1);
         female.customInfo.shapeValueBody[1] = UnityEngine.Random.Range(min2, max2);
         female.customInfo.shapeValueBody[2] = UnityEngine.Random.Range(min3, max3);
