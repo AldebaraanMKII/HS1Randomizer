@@ -341,7 +341,18 @@ public class HS1RandomizeAll : MonoBehaviour
         // female.customInfo.faceDetailWeight = lstRandFace[index].detailWeight;
         female.customInfo.faceDetailWeight = UnityEngine.Random.Range(0.1f, 0.8f);
 
-        //////////////////////////////// numbers
+
+        var dllPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+        string configFilename = "HS1Randomizer.json";
+        var configPath = Path.Combine(dllPath, configFilename);
+		
+		//// from https://answers.unity.com/questions/1473952/how-to-write-and-read-json-in-unity.html  
+		//// https://github.com/Bunny83/SimpleJSON
+        string jsonString = File.ReadAllText(configPath); 
+        JSONNode data = JSON.Parse(jsonString);
+		JSONNode FaceSettings = data["FaceSettings"];
+
+        //////////////////////////////// Hair color
         float num2 = 0f;
         float num3 = 0f;
         float num4 = 0f;
@@ -350,7 +361,9 @@ public class HS1RandomizeAll : MonoBehaviour
         float num7 = 0f;
         float num8 = 0f;
         float num9 = 0f;
-        if (UnityEngine.Random.Range(0, 100) < 90)
+		// predefined
+		int hair_color_predefined_preset_chance = FaceSettings["hair_color_predefined_preset_chance"];
+        if (UnityEngine.Random.Range(0, 100) < hair_color_predefined_preset_chance)
         {
             float[,] array = new float[21, 8] // 21 is number of {} and 8 is item count
             {
@@ -668,6 +681,31 @@ public class HS1RandomizeAll : MonoBehaviour
         female.customInfo.hairColor[2].specularIntensity = num8;
         female.customInfo.hairColor[2].specularSharpness = num9;
 
+        //////////////////////////////// Fingernails color		
+		JSONNode BodySettings = data["BodySettings"];
+		int firgernail_paint_chance = BodySettings["firgernail_paint_chance"];
+		if (UnityEngine.Random.Range(0, 100) < firgernail_paint_chance)
+        {
+		  int firgernail_paint_match_hair_color_chance = BodySettings["firgernail_paint_match_hair_color_chance"];
+		  if (UnityEngine.Random.Range(0, 100) > firgernail_paint_match_hair_color_chance)
+          {
+            num2 = UnityEngine.Random.Range(0f, 359f);
+            num3 = UnityEngine.Random.Range(0f, 1f);
+            num4 = UnityEngine.Random.Range(0.3f, 0.6f);
+            num5 = num2;
+            num6 = num3;
+            num7 = num4 + 0.15f;
+            num8 = 0.6f;
+            num9 = 0.6f;
+		  }
+		}
+        female.femaleCustomInfo.nailColor.hsvDiffuse.Copy(new HsvColor(num2, num3, num4));
+        female.femaleCustomInfo.nailColor.hsvSpecular.Copy(new HsvColor(num5, num6, num7));
+        female.femaleCustomInfo.nailColor.specularIntensity = num8;
+        female.femaleCustomInfo.nailColor.specularSharpness = num9;
+		
+
+
         //////////////////////////////// eyebrow
         Dictionary<int, ListTypeMaterial> femaleMaterialList = female.ListInfo.GetFemaleMaterialList(CharaListInfo.TypeFemaleMaterial.cf_m_eyebrow);
         List<int> list3 = new List<int>();
@@ -707,8 +745,9 @@ public class HS1RandomizeAll : MonoBehaviour
         female.customInfo.eyeLColor.hsvDiffuse.Copy(src);
         female.customInfo.eyeLColor.hsvSpecular.Copy(src2);
         /////////////////////////////////// heterochromia chance (5% default)		
-        bool flag2 = (UnityEngine.Random.Range(0, 100) < 90) ? true : false;
-        if (!flag2)
+		int heterochromia_chance = FaceSettings["heterochromia_chance"];
+        // bool flag2 = (UnityEngine.Random.Range(0, 100) < heterochromia_chance) ? true : false;
+        if (UnityEngine.Random.Range(0, 100) < heterochromia_chance)
         {
             // src = new HsvColor(UnityEngine.Random.Range(0f, 359f), 0.25f, 0.5f);
             src = new HsvColor(UnityEngine.Random.Range(0f, 359f), UnityEngine.Random.Range(0.25f, 0.90f), UnityEngine.Random.Range(0.6f, 0.90f));
@@ -719,7 +758,8 @@ public class HS1RandomizeAll : MonoBehaviour
         female.customInfo.eyeRColor.hsvSpecular.Copy(src2);
 
         //////////////////////////////// eye shadow
-        if (UnityEngine.Random.Range(0, 100) < 20)
+		int eye_shadow_chance = FaceSettings["eye_shadow_chance"];
+        if (UnityEngine.Random.Range(0, 100) < eye_shadow_chance)
         {
             Dictionary<int, ListTypeTexture> femaleTextureList2 = female.ListInfo.GetFemaleTextureList(CharaListInfo.TypeFemaleTexture.cf_t_eyeshadow);
             List<int> list5 = new List<int>();
@@ -782,7 +822,8 @@ public class HS1RandomizeAll : MonoBehaviour
         }
 
         //////////////////////////////// cheeks
-        if (UnityEngine.Random.Range(0, 100) < 20)
+		int cheeks_detail_chance = FaceSettings["cheeks_detail_chance"];
+        if (UnityEngine.Random.Range(0, 100) < cheeks_detail_chance)
         {
             Dictionary<int, ListTypeTexture> femaleTextureList3 = female.ListInfo.GetFemaleTextureList(CharaListInfo.TypeFemaleTexture.cf_t_cheek);
             int index12 = UnityEngine.Random.Range(0, femaleTextureList3.Count);
@@ -837,7 +878,8 @@ public class HS1RandomizeAll : MonoBehaviour
         female.femaleCustomInfo.lipColor.alpha = UnityEngine.Random.Range(0.2f, 0.5f);
 
         //////////////////////////////// moles
-        if (UnityEngine.Random.Range(0, 100) < 10)
+		int mole_chance = FaceSettings["mole_chance"];
+        if (UnityEngine.Random.Range(0, 100) < mole_chance)
         {
             Dictionary<int, ListTypeTexture> femaleTextureList5 = female.ListInfo.GetFemaleTextureList(CharaListInfo.TypeFemaleTexture.cf_t_mole);
             int index14 = UnityEngine.Random.Range(0, femaleTextureList5.Count);
@@ -884,8 +926,8 @@ public class HS1RandomizeAll : MonoBehaviour
         female.femaleCustomInfo.underhairColor.specularSharpness = num9;
 
         //////////////////////////////// elf ears	
-        bool flag3 = (UnityEngine.Random.Range(0, 100) < 90) ? true : false;
-        if (!flag3)
+		int elf_ears_chance = FaceSettings["elf_ears_chance"];
+        if (UnityEngine.Random.Range(0, 100) < elf_ears_chance)
         {
             female.customInfo.shapeValueFace[64] = UnityEngine.Random.Range(0.1f, 0.9f);
             female.customInfo.shapeValueFace[65] = UnityEngine.Random.Range(0.8f, 0.9f);
@@ -899,7 +941,7 @@ public class HS1RandomizeAll : MonoBehaviour
         if (female == null) return;
 
         var dllPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-        string configFilename = "Randomizer.json";
+        string configFilename = "HS1Randomizer.json";
         var configPath = Path.Combine(dllPath, configFilename);
 		
 		//// from https://answers.unity.com/questions/1473952/how-to-write-and-read-json-in-unity.html  
@@ -1101,7 +1143,7 @@ public class HS1RandomizeAll : MonoBehaviour
         // if (tattoo)
         // {
 			
-			int tattoo_chance = BodySettings["tattoo_chance"];
+			// int tattoo_chance = BodySettings["tattoo_chance"];
         	if (UnityEngine.Random.Range(0, 100) < tattoo_chance)
         	{
         		Dictionary<int, ListTypeTexture> femaleTextureList7 = female.ListInfo.GetFemaleTextureList(CharaListInfo.TypeFemaleTexture.cf_t_tattoo_b);
