@@ -2,6 +2,13 @@
 
 Randomly generates a new character in the female maker.
 
+Requirements
+
+    A fully updated game (v1.20)
+    IPA https://github.com/Eusth/IPA
+    
+
+
 How To Install
 
     Download a release (https://github.com/AldebaraanMKII/HS1Randomizer/releases)
