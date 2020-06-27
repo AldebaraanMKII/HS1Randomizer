@@ -331,6 +331,7 @@ public class HS1RandomizeAll : MonoBehaviour
         //4
         //26
         //9
+        RandomiseCharPersonality(female);
         int index = UnityEngine.Random.Range(0, 4);
         int index22 = UnityEngine.Random.Range(0, 26);
         int index23 = UnityEngine.Random.Range(0, 9);
@@ -706,7 +707,7 @@ public class HS1RandomizeAll : MonoBehaviour
 		
 
 
-        //////////////////////////////// eyebrow
+        //////////////////////////////// eyebrows
         Dictionary<int, ListTypeMaterial> femaleMaterialList = female.ListInfo.GetFemaleMaterialList(CharaListInfo.TypeFemaleMaterial.cf_m_eyebrow);
         List<int> list3 = new List<int>();
         foreach (KeyValuePair<int, ListTypeMaterial> item8 in femaleMaterialList)
@@ -724,6 +725,7 @@ public class HS1RandomizeAll : MonoBehaviour
         female.customInfo.eyebrowColor.hsvSpecular.Copy(new HsvColor(num5, num6, num7));
         female.customInfo.eyebrowColor.specularIntensity = 0f;
         female.customInfo.eyebrowColor.specularSharpness = 0f;
+		
         //////////////////////////////// eyes
         Dictionary<int, ListTypeMaterial> femaleMaterialList2 = female.ListInfo.GetFemaleMaterialList(CharaListInfo.TypeFemaleMaterial.cf_m_eyeball);
         List<int> list4 = new List<int>();
@@ -740,8 +742,8 @@ public class HS1RandomizeAll : MonoBehaviour
         female.customInfo.matEyeRId = list4[index10];
         //////////////////////////////// eye color left
         // HsvColor src = new HsvColor(UnityEngine.Random.Range(0f, 359f), 0.25f, 0.5f);
-		int eyes_match_hair_color_chance = FaceSettings["eyes_match_hair_color_chance"];
-		if (UnityEngine.Random.Range(0, 100) < eyes_match_hair_color_chance)
+		int eye_color_match_hair_color_chance = FaceSettings["eye_color_match_hair_color_chance"];
+		if (UnityEngine.Random.Range(0, 100) < eye_color_match_hair_color_chance)
 		{
           HsvColor src = new HsvColor(num2, num3, num4);
           HsvColor src2 = new HsvColor(num5, num6, num7);
@@ -854,45 +856,53 @@ public class HS1RandomizeAll : MonoBehaviour
         //////////////////////////////// lips
         Dictionary<int, ListTypeTexture> femaleTextureList4 = female.ListInfo.GetFemaleTextureList(CharaListInfo.TypeFemaleTexture.cf_t_lip);
         // int index13 = UnityEngine.Random.Range(0, femaleTextureList4.Count);
-        int index13 = UnityEngine.Random.Range(0, 4);
-        female.femaleCustomInfo.texLipId = femaleTextureList4.ElementAt(index13).Key;
-        float[,] array6 = new float[6, 3]
-        {
-        {
-            0f,
-            0.9f,
-            0.5f
-        },
-        {
-            0f,
-            0.9f,
-            0.5f
-        },
-        {
-            0f,
-            0.9f,
-            0.5f
-        },
-        {
-            0f,
-            0.9f,
-            0.5f
-        },
-        {
-            310f,
-            0.2f,
-            0.7f
-        },
-        {
-            340f,
-            0.25f,
-            0.7f
-        }
-        };
-        int num16 = UnityEngine.Random.Range(0, array6.GetLength(0));
-        female.femaleCustomInfo.lipColor.hsvDiffuse = new HsvColor(array6[num16, 0], array6[num16, 1], array6[num16, 2]);
-        female.femaleCustomInfo.lipColor.alpha = UnityEngine.Random.Range(0.2f, 0.5f);
-
+		int lipstick_chance = FaceSettings["lipstick_chance"];
+        if (UnityEngine.Random.Range(0, 100) < lipstick_chance)        
+		{
+		  int index13 = UnityEngine.Random.Range(1, 4);
+          female.femaleCustomInfo.texLipId = femaleTextureList4.ElementAt(index13).Key;
+          float[,] array6 = new float[6, 3]
+          {
+          {
+              0f,
+              0.9f,
+              0.5f
+          },
+          {
+              0f,
+              0.9f,
+              0.5f
+          },
+          {
+              0f,
+              0.9f,
+              0.5f
+          },
+          {
+              0f,
+              0.9f,
+              0.5f
+          },
+          {
+              310f,
+              0.2f,
+              0.7f
+          },
+          {
+              340f,
+              0.25f,
+              0.7f
+          }
+          };
+          int num16 = UnityEngine.Random.Range(0, array6.GetLength(0));
+          female.femaleCustomInfo.lipColor.hsvDiffuse = new HsvColor(array6[num16, 0], array6[num16, 1], array6[num16, 2]);
+          female.femaleCustomInfo.lipColor.alpha = UnityEngine.Random.Range(0.2f, 0.5f);
+		}
+		// if no just set it to no lipstick
+		else
+		{
+          female.femaleCustomInfo.texLipId = femaleTextureList4.ElementAt(0).Key;
+		}
         //////////////////////////////// moles
 		int mole_chance = FaceSettings["mole_chance"];
         if (UnityEngine.Random.Range(0, 100) < mole_chance)
@@ -973,10 +983,47 @@ public class HS1RandomizeAll : MonoBehaviour
         float min1 = randompreset["height"]["x"];
         float min2 = randompreset["upper_arms"]["x"];
         float min3 = randompreset["lower_arms"]["x"];
+        float min4 = randompreset["lower_arms"]["x"];
+        float min5 = randompreset["lower_arms"]["x"];
+        float min6 = randompreset["lower_arms"]["x"];
+        float min7 = randompreset["lower_arms"]["x"];
+        float min8 = randompreset["lower_arms"]["x"];
+        float min9 = randompreset["lower_arms"]["x"];
 		
-        float max1 = randompreset["height"]["y"];
-        float max2 = randompreset["upper_arms"]["y"];
-        float max3 = randompreset["lower_arms"]["y"];
+        float min10 = randompreset["lower_arms"]["x"];
+        float min11 = randompreset["lower_arms"]["x"];
+        float min12 = randompreset["upper_arms"]["x"];
+        float min13 = randompreset["lower_arms"]["x"];
+        float min14 = randompreset["lower_arms"]["x"];
+        float min15 = randompreset["lower_arms"]["x"];
+        float min16 = randompreset["lower_arms"]["x"];
+        float min17 = randompreset["lower_arms"]["x"];
+        float min18 = randompreset["lower_arms"]["x"];
+        float min19 = randompreset["lower_arms"]["x"];
+		
+        float min20 = randompreset["lower_arms"]["x"];
+        float min21 = randompreset["lower_arms"]["x"];
+        float min22 = randompreset["upper_arms"]["x"];
+        float min23 = randompreset["lower_arms"]["x"];
+        float min24 = randompreset["lower_arms"]["x"];
+        float min25 = randompreset["lower_arms"]["x"];
+        float min26 = randompreset["lower_arms"]["x"];
+        float min27 = randompreset["lower_arms"]["x"];
+        float min28 = randompreset["lower_arms"]["x"];
+        float min29 = randompreset["lower_arms"]["x"];
+		
+        float min20 = randompreset["lower_arms"]["x"];
+        float min21 = randompreset["lower_arms"]["x"];
+        float min22 = randompreset["upper_arms"]["x"];
+        float min23 = randompreset["lower_arms"]["x"];
+        float min24 = randompreset["lower_arms"]["x"];
+        float min25 = randompreset["lower_arms"]["x"];
+        float min26 = randompreset["lower_arms"]["x"];
+        float min27 = randompreset["lower_arms"]["x"];
+        float min28 = randompreset["lower_arms"]["x"];
+        float min29 = randompreset["lower_arms"]["x"];
+        float min30 = randompreset["lower_arms"]["x"];
+        float min31 = randompreset["lower_arms"]["x"];
 		
 		//// applies the values
         female.customInfo.shapeValueBody[0] = UnityEngine.Random.Range(min1, max1);
@@ -1308,6 +1355,7 @@ public class HS1RandomizeAll : MonoBehaviour
     void RandomiseCharBodyFace()
     {
         if (female == null) return;
+        RandomiseCharPersonality(female);
         RandomiseCharFace(lstRandFaceF);
         RandomiseCharBody();
     }
