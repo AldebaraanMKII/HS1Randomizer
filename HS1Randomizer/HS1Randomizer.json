@@ -1,0 +1,149 @@
+
+
+{ 
+    "KeyCodes": {
+       "RandomizeAllKey": "[1]",
+       "RandomizeFaceKey": "[2]", 
+       "RandomizeBodyKey": "[3]", 
+       "RandomizeFaceBodyKey": "[4]",
+       "RandomizeClothesKey": "[5]"
+    },
+
+    "OtherSettings" : {
+       "headId": {"x":0, "y":4},
+       "texFaceId": {"x":0, "y":26},
+       "texFaceDetailId": {"x":0, "y":9},
+       "faceDetailWeight": {"x":0.1, "y":0.8},
+       "heterochromia_chance": 10,
+       "eye_shadow_chance": 20,
+       "cheeks_detail_chance": 20,
+       "mole_chance": 10,
+       "elf_ears_chance": 10,
+       "body_detail_chance": 30,
+       "tattoo_chance": 10,
+       "sunburn_chance": 20
+    },
+ 
+ 
+    "FacePresets":[
+	{  
+	   "Name":"FacePreset1",
+       "Overall_Face_Breadth": {"x":0.35, "y":0.45},
+       "Upper_face_depth": {"x":0.3, "y":0.45},
+       "Face_height": {"x":0.4, "y":0.52},
+       "Lower_face_depth": {"x":0.45, "y":0.6},
+       "Lower_face_width": {"x":0.1, "y":0.4},
+	   "Jaw_Width": {"x":0.1, "y":0.4}, 
+	   "Jaw_Height": {"x":0.1, "y":0.4},
+	   "Jaw_Depth": {"x":0.1, "y":0.4},  
+	   "Jaw_Angle": {"x":0.1, "y":0.4}, 
+	   "Neck_Droop": {"x":0.1, "y":0.4}, 
+	   "Chin_Width": {"x":0.1, "y":0.4},
+	   "Chin_Height": {"x":0.1, "y":0.4},
+	   "Chin_Depth": {"x":0.1, "y":0.4},
+	   "Lower_Cheek_Height": {"x":0.1, "y":0.4},
+	   "Lower_Cheek_Depth": {"x":0.1, "y":0.4},
+	   "Lower_Cheek_Width": {"x":0.1, "y":0.4},
+	   "Upper_Cheek_Height": {"x":0.1, "y":0.4},
+	   "Upper_Cheek_Depth": {"x":0.1, "y":0.4},
+	   "Upper_Cheek_Width": {"x":0.1, "y":0.4},
+	   "Eyebrow_Height": {"x":0.1, "y":0.4},
+	   "Eyebrow_Spacing": {"x":0.1, "y":0.4},
+	   "Eyebrow_Angle": {"x":0.1, "y":0.4},
+	   "Inner_Arching": {"x":0.1, "y":0.4},
+	   "Outer_Arching": {"x":0.1, "y":0.4},
+	   "Eye_Height": {"x":0.1, "y":0.4},
+	   "Eye_Spacing": {"x":0.1, "y":0.4},
+	   "Eye_Depth": {"x":0.1, "y":0.4},
+	   "Eye_Width": {"x":0.1, "y":0.4},
+	   "Eye_Openness": {"x":0.1, "y":0.4},
+	   "Eye_Angle 1": {"x":0.1, "y":0.4},
+	   "Eye_Angle 2": {"x":0.1, "y":0.4},
+	   "Inner_Corner_Distance": {"x":0.1, "y":0.4},
+	   "Outer_Corner_Distance": {"x":0.1, "y":0.4},
+	   "Inner_Corner_Height": {"x":0.1, "y":0.4},
+	   "Outer_Corner_Height": {"x":0.1, "y":0.4},
+	   "Eyelid_Shape_1": {"x":0.1, "y":0.4},
+	   "Eyelid_Shape_2": {"x":0.1, "y":0.4},
+	   "Pupil_Pos": {"x":0.1, "y":0.4},
+	   "Pupil_Width": {"x":0.1, "y":0.4},
+	   "Pupil_Height": {"x":0.1, "y":0.4},
+	   "Nose_Height": {"x":0.1, "y":0.4},
+	   "Nose_Projection": {"x":0.1, "y":0.4},
+	   "Nose_Angle": {"x":0.1, "y":0.4},
+	   "Nose_Size": {"x":0.1, "y":0.4},
+	   "Bridge_Height": {"x":0.1, "y":0.4},
+	   "Bridge_Width": {"x":0.1, "y":0.4},
+	   "Bridge_Shape": {"x":0.1, "y":0.4},
+	   "Nose_Width": {"x":0.1, "y":0.4},
+	   "Nostril_Height": {"x":0.1, "y":0.4},
+	   "Nostril_Length": {"x":0.1, "y":0.4},
+	   "Nostril_Inner Width": {"x":0.1, "y":0.4},
+	   "Nostril_Outer Width": {"x":0.1, "y":0.4},
+	   "Tip_Height": {"x":0.1, "y":0.4},
+	   "Tip_Length": {"x":0.1, "y":0.4},
+	   "Tip_Size": {"x":0.1, "y":0.4},
+	   "Mouth_Height": {"x":0.1, "y":0.4},
+	   "Mouth_Width": {"x":0.1, "y":0.4},
+	   "Lip Thickness": {"x":0.1, "y":0.4},
+	   "Mouth Projection": {"x":0.1, "y":0.4},
+	   "Upper Lip Thickness": {"x":0.1, "y":0.4},
+	   "Lower Lip Thickness": {"x":0.1, "y":0.4},
+	   "Corner Shape": {"x":0.1, "y":0.4},
+	   "Ear Size": {"x":0.1, "y":0.4},
+	   "Ear Angle": {"x":0.1, "y":0.4},
+	   "Ear Rotation": {"x":0.1, "y":0.4},
+	   "Upper Ear Shape": {"x":0.1, "y":0.4},
+	   "Lower Ear Shape": {"x":0.1, "y":0.4 }
+    }
+	],
+	
+
+    "BodyPresets":[
+	{  
+	   "Name":"BodyPreset1",
+       "height": {"x":0.35, "y":0.45},
+       "bust_size": {"x":0.35, "y":0.45},
+       "breast_height": {"x":0.35, "y":0.45},
+       "breast_direction": {"x":0.35, "y":0.45},
+       "breast_spacing": {"x":0.35, "y":0.45},
+	   "breast_angle": {"x":0.35, "y":0.45},
+	   "breast_lenght": {"x":0.35, "y":0.45},
+	   "areola_puffiness": {"x":0.35, "y":0.45},
+	   "nipple_width": {"x":0.35, "y":0.45},
+	   "Head_size": {"x":0.35, "y":0.45},
+	   "Neck_width": {"x":0.35, "y":0.45},
+	   "Neck_thickness": {"x":0.35, "y":0.45},
+	   "Thorax_width": {"x":0.35, "y":0.45},
+	   "Thorax_thickness": {"x":0.35, "y":0.45},
+	   "Chest_width": {"x":0.35, "y":0.45},
+	   "Chest_thickness": {"x":0.35, "y":0.45},
+	   "Waist_width": {"x":0.35, "y":0.45},
+	   "Waist_thickness": {"x":0.35, "y":0.45},
+	   "Waist_height": {"x":0.35, "y":0.45},
+	   "Pelvis_width": {"x":0.35, "y":0.45},
+	   "Pelvis_thickness": {"x":0.35, "y":0.45},
+	   "hips_width": {"x":0.35, "y":0.45},
+	   "hips_thickness": {"x":0.35, "y":0.45},
+	   "Butt": {"x":0.35, "y":0.45},
+	   "Butt_angle": {"x":0.35, "y":0.45},
+	   "thighs": {"x":0.35, "y":0.45},
+	   "legs": {"x":0.35, "y":0.45},
+	   "Calves": {"x":0.35, "y":0.45},
+	   "ankles": {"x":0.35, "y":0.45},
+	   "shoulders": {"x":0.35, "y":0.45},
+	   "upper_arms": {"x":0.35, "y":0.45},
+	   "Lower_arms": {"x":0.35, "y":0.45 }
+    }
+	]
+	
+}
+
+
+
+
+
+
+
+
+ 

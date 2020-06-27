@@ -1,4 +1,4 @@
-using Manager;
+﻿using Manager;
 using IllusionPlugin;
 using System;  /////
 using System.Collections;
@@ -8,6 +8,10 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using RandomSearch;
+using System.Reflection;
+//using Tommy;
+using SimpleJSON;
+
 
 
 public class HSCharRandom : IPlugin
@@ -38,6 +42,156 @@ public class HS1RandomizeAll : MonoBehaviour
     protected bool saveCard;
     protected int coordinateType;
 
+    // string KeyCodes;
+    // string RandomizeAllKey;
+    // string RandomizeFaceKey;
+    // string RandomizeBodyKey;
+    // string RandomizeFaceBodyKey;
+    // string RandomizeClothesKey;
+
+    string Key1;
+    string Key2;
+    string Key3;
+    string Key4;
+    string Key5;
+
+
+    [System.Serializable]
+    public class RootObject
+    {
+        public KeyCodes KeyCodes;
+    }
+
+    [System.Serializable]
+    public class KeyCodes
+    {
+        public string RandomizeAllKey;
+        public string RandomizeFaceKey;
+        public string RandomizeBodyKey;
+        public string RandomizeFaceBodyKey;
+        public string RandomizeClothesKey;
+    }
+	
+    [System.Serializable]
+    public class Token
+    {
+        public FacePreset[] FacePresets;
+        public BodyPreset[] BodyPresets;
+        // public Key[] Keys;
+    }
+	
+    [System.Serializable]
+    public class FacePreset
+    {
+        public string name;
+        public Vector2 overall_face_breadth;
+        public Vector2 upper_face_depth;
+        public Vector2 face_height;
+        public Vector2 lower_face_depth;
+        public Vector2 lower_face_width;
+        public Vector2 jaw_width;
+        public Vector2 jaw_height;
+        public Vector2 jaw_depth;
+        public Vector2 jaw_angle;
+        public Vector2 neck_droop;
+        public Vector2 chin_width;
+        public Vector2 chin_height;
+        public Vector2 chin_depth;
+        public Vector2 lower_cheek_height;
+        public Vector2 lower_cheek_depth;
+        public Vector2 lower_cheek_width;
+        public Vector2 upper_cheek_height;
+        public Vector2 upper_cheek_depth;
+        public Vector2 upper_cheek_width;
+        public Vector2 eyebrow_height;
+        public Vector2 eyebrow_spacing;
+        public Vector2 eyebrow_angle;
+        public Vector2 inner_arching;
+        public Vector2 outer_arching;
+        public Vector2 eye_height;
+        public Vector2 eye_spacing;
+        public Vector2 eye_depth;
+        public Vector2 eye_width;
+        public Vector2 eye_openness;
+        public Vector2 eye_angle_1;
+        public Vector2 eye_angle_2;
+        public Vector2 inner_corner_distance;
+        public Vector2 outer_corner_distance;
+        public Vector2 inner_corner_height;
+        public Vector2 outer_corner_height;
+        public Vector2 eyelid_shape_1;
+        public Vector2 eyelid_shape_2;
+        public Vector2 pupil_pos;
+        public Vector2 pupil_width;
+        public Vector2 pupil_height;
+        public Vector2 nose_height;
+        public Vector2 nose_projection;
+        public Vector2 nose_angle;
+        public Vector2 nose_size;
+        public Vector2 bridge_height;
+        public Vector2 bridge_width;
+        public Vector2 bridge_shape;
+        public Vector2 nose_width;
+        public Vector2 nostril_height;
+        public Vector2 nostril_length;
+        public Vector2 nostril_inner_width;
+        public Vector2 nostril_outer_width;
+        public Vector2 tip_height;
+        public Vector2 tip_length;
+        public Vector2 tip_size;
+        public Vector2 mouth_height;
+        public Vector2 mouth_width;
+        public Vector2 lip_thickness;
+        public Vector2 mouth_projection;
+        public Vector2 upper_lip_thickness;
+        public Vector2 lower_lip_thickness;
+        public Vector2 corner_shape;
+        public Vector2 ear_size;
+        public Vector2 ear_angle;
+        public Vector2 ear_rotation;
+        public Vector2 upper_ear_shape;
+        public Vector2 lower_ear_shape;
+    }
+
+    [System.Serializable]
+    public class BodyPreset
+    {
+        public string name;
+        public Vector2 height;
+        public Vector2 bust_size;
+        public Vector2 breast_height;
+        public Vector2 breast_direction;
+        public Vector2 breast_spacing;
+        public Vector2 breast_angle;
+        public Vector2 breast_lenght;
+        public Vector2 areola_puffiness;
+        public Vector2 nipple_width;
+        public Vector2 head_size;
+        public Vector2 neck_width;
+        public Vector2 neck_thickness;
+        public Vector2 thorax_width;
+        public Vector2 thorax_thickness;
+        public Vector2 chest_width;
+        public Vector2 chest_thickness;
+        public Vector2 waist_width;
+        public Vector2 waist_thickness;
+        public Vector2 waist_height;
+        public Vector2 pelvis_width;
+        public Vector2 pelvis_thickness;
+        public Vector2 hips_width;
+        public Vector2 butt;
+        public Vector2 butt_angle;
+        public Vector2 thighs;
+        public Vector2 legs;
+        public Vector2 calves;
+        public Vector2 ankles;
+        public Vector2 shoulders;
+        public Vector2 upper_arms;
+        public Vector2 lower_arms;
+    }
+
+    public Vector2 currentkey;
+
     protected List<CharFemaleRandom.RandomFaceFemaleInfo> lstRandFaceF = new List<CharFemaleRandom.RandomFaceFemaleInfo>();
 
     void Awake()
@@ -53,49 +207,73 @@ public class HS1RandomizeAll : MonoBehaviour
         );
         female = cc.chainfo as CharFemale;
         LoadAssets();
+		
+        ////GetExecutingAssembly finds the path where THIS code is running
+        var dllPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+        string configFilename = "HS1Randomizer.json";
+        var configPath = Path.Combine(dllPath, configFilename);
+		
+		
+		//// from https://answers.unity.com/questions/1473952/how-to-write-and-read-json-in-unity.html  
+		//// https://github.com/Bunny83/SimpleJSON
+        string jsonString = File.ReadAllText(configPath); 
+        JSONNode data = JSON.Parse(jsonString);
+		JSONNode keycodes = data["KeyCodes"];
+		
+		Key1 = keycodes["RandomizeAllKey"];
+        Key2 = keycodes["RandomizeFaceKey"];
+        Key3 = keycodes["RandomizeBodyKey"];
+        Key4 = keycodes["RandomizeFaceBodyKey"];
+        Key5 = keycodes["RandomizeClothesKey"];
+
+        // Key1 = "[1]";
+        // Key2 = "[2]";
+        // Key3 = "[3]";
+        // Key4 = "[4]";
+        // Key5 = "[5]";
     }
 
     void Update()
     {
         //////////////////////////////////////// All
-        if (Input.GetKeyDown(KeyCode.Keypad1))
+        if (Input.GetKeyDown(Key1))
         {
             RandomiseCharAll();
             //female.Reload();
         }
         //////////////////////////////////////// Only face
-        if (Input.GetKeyDown(KeyCode.Keypad2))
+        if (Input.GetKeyDown(Key2))
         {
             RandomiseCharFace(lstRandFaceF);
             female.chaFile.ChangeCoordinateType((CharDefine.CoordinateType)coordinateType);
             female.Reload();
         }
         //////////////////////////////////////// Only body
-        if (Input.GetKeyDown(KeyCode.Keypad3))
+        if (Input.GetKeyDown(Key3))
         {
             RandomiseCharBody();
             female.chaFile.ChangeCoordinateType((CharDefine.CoordinateType)coordinateType);
             female.Reload();
         }
         //////////////////////////////////////// Body/Face
-        if (Input.GetKeyDown(KeyCode.Keypad4))
+        if (Input.GetKeyDown(Key4))
         {
             RandomiseCharBodyFace();
             female.chaFile.ChangeCoordinateType((CharDefine.CoordinateType)coordinateType);
             female.Reload();
         }
         //////////////////////////////////////// Clothes and accessories
-        if (Input.GetKeyDown(KeyCode.Keypad5))
+        if (Input.GetKeyDown(Key5))
         {
             RandomiseCharClothing();
             female.chaFile.ChangeCoordinateType((CharDefine.CoordinateType)coordinateType);
             female.Reload();
         }
         //////////////////////////////////////// Save card
-        if (Input.GetKeyDown(KeyCode.Keypad6))
-        {
-            CustomMenu.SubMenuBase.ExecuteSaveNew();
-        }
+        //if (Input.GetKeyDown(KeyCode.Keypad6))
+        //{
+        //    CustomMenu.SubMenuBase.ExecuteSaveNew();
+        //}
         ////////////////////////////////////////
     }
 
@@ -162,161 +340,6 @@ public class HS1RandomizeAll : MonoBehaviour
         female.customInfo.texFaceDetailId = lstRandFace[index23].detailTexNo;
         // female.customInfo.faceDetailWeight = lstRandFace[index].detailWeight;
         female.customInfo.faceDetailWeight = UnityEngine.Random.Range(0.1f, 0.8f);
-
-        ////////////////////////////////Overall Face Breadth,
-        female.customInfo.shapeValueFace[0] = UnityEngine.Random.Range(0.35f, 0.45f);
-        ////////////////////////////////Upper face depth,
-        female.customInfo.shapeValueFace[1] = UnityEngine.Random.Range(0.3f, 0.45f);
-        ////////////////////////////////Face height,
-        female.customInfo.shapeValueFace[2] = UnityEngine.Random.Range(0.4f, 0.52f);
-        ////////////////////////////////Lower face depth,
-        female.customInfo.shapeValueFace[3] = UnityEngine.Random.Range(0.45f, 0.6f);
-        ////////////////////////////////Lower face width,
-        female.customInfo.shapeValueFace[4] = UnityEngine.Random.Range(0.1f, 0.4f);
-
-        ////////////////////////////////Jaw Width
-        female.customInfo.shapeValueFace[5] = UnityEngine.Random.Range(0.2f, 0.35f);
-        ////////////////////////////////Jaw Height
-        female.customInfo.shapeValueFace[6] = UnityEngine.Random.Range(0.2f, 0.5f);
-        ////////////////////////////////Jaw Depth
-        female.customInfo.shapeValueFace[7] = UnityEngine.Random.Range(0.2f, 0.35f);
-        ////////////////////////////////Jaw Angle
-        female.customInfo.shapeValueFace[8] = UnityEngine.Random.Range(0.2f, 0.5f);
-
-        ////////////////////////////////Neck Droop
-        female.customInfo.shapeValueFace[9] = UnityEngine.Random.Range(0.5f, 0.9f);
-        ////////////////////////////////Chin Width
-        female.customInfo.shapeValueFace[10] = UnityEngine.Random.Range(0.2f, 0.6f);
-        ////////////////////////////////Chin Height
-        female.customInfo.shapeValueFace[11] = UnityEngine.Random.Range(0.2f, 0.5f);
-        ////////////////////////////////Chin Depth
-        female.customInfo.shapeValueFace[12] = UnityEngine.Random.Range(0.05f, 0.3f);
-
-
-        ////////////////////////////////Lower Cheek Height
-        female.customInfo.shapeValueFace[13] = UnityEngine.Random.Range(0.1f, 0.3f);
-        ////////////////////////////////Lower Cheek Depth
-        female.customInfo.shapeValueFace[14] = UnityEngine.Random.Range(0.5f, 0.8f);
-        ////////////////////////////////Lower Cheek Width
-        female.customInfo.shapeValueFace[15] = UnityEngine.Random.Range(0.5f, 0.8f);
-
-        ////////////////////////////////Upper Cheek Height
-        female.customInfo.shapeValueFace[16] = UnityEngine.Random.Range(0.2f, 0.6f);
-        ////////////////////////////////Upper Cheek Depth
-        female.customInfo.shapeValueFace[17] = UnityEngine.Random.Range(0.3f, 0.45f);
-        ////////////////////////////////Upper Cheek Width
-        female.customInfo.shapeValueFace[18] = UnityEngine.Random.Range(0.2f, 0.5f);
-
-
-        ////////////////////////////////Eyebrow Spacing
-        female.customInfo.shapeValueFace[20] = UnityEngine.Random.Range(0.2f, 0.4f);
-        ////////////////////////////////Eyebrow Angle
-        female.customInfo.shapeValueFace[21] = UnityEngine.Random.Range(0.2f, 0.9f);
-        ////////////////////////////////Inner Arching
-        female.customInfo.shapeValueFace[22] = UnityEngine.Random.Range(0.1f, 0.7f);
-        ////////////////////////////////Outer Arching
-        female.customInfo.shapeValueFace[23] = UnityEngine.Random.Range(0.2f, 0.5f);
-
-
-        ////////////////////////////////Eye Height
-        float Eye_Height = UnityEngine.Random.Range(0.25f, 0.5f);
-        female.customInfo.shapeValueFace[24] = Eye_Height;
-        ////////////////////////////////Eyebrow Height
-        float Eyebrow_Height = UnityEngine.Random.Range(0.3f, 0.5f);
-        female.customInfo.shapeValueFace[19] = Eye_Height - Eyebrow_Height;
-        ////////////////////////////////Eye Spacing
-        female.customInfo.shapeValueFace[25] = UnityEngine.Random.Range(0.1f, 0.25f);
-        ////////////////////////////////Eye Depth
-        female.customInfo.shapeValueFace[26] = UnityEngine.Random.Range(0.1f, 0.5f);
-        ////////////////////////////////Eye Width
-        female.customInfo.shapeValueFace[27] = UnityEngine.Random.Range(0.6f, 0.8f);
-        ////////////////////////////////Eye Openness
-        female.customInfo.shapeValueFace[28] = UnityEngine.Random.Range(0.5f, 0.7f);
-        ////////////////////////////////Eye Angle 1
-        female.customInfo.shapeValueFace[29] = UnityEngine.Random.Range(0.45f, 0.55f);
-        ////////////////////////////////Eye Angle 2
-        female.customInfo.shapeValueFace[30] = UnityEngine.Random.Range(0.4f, 0.7f);
-
-        ////////////////////////////////Inner Corner Distance
-        female.customInfo.shapeValueFace[31] = UnityEngine.Random.Range(0.5f, 0.8f);
-        ////////////////////////////////Outer Corner Distance
-        female.customInfo.shapeValueFace[32] = UnityEngine.Random.Range(0.5f, 0.7f);
-        ////////////////////////////////Inner Corner Height
-        female.customInfo.shapeValueFace[33] = UnityEngine.Random.Range(0.5f, 0.8f);
-        ////////////////////////////////Outer Corner Height
-        female.customInfo.shapeValueFace[34] = UnityEngine.Random.Range(0.3f, 0.8f);
-
-        ////////////////////////////////Eyelid Shape 1
-        female.customInfo.shapeValueFace[35] = UnityEngine.Random.Range(0.9f, 1.3f);
-        ////////////////////////////////Eyelid Shape 2
-        female.customInfo.shapeValueFace[36] = UnityEngine.Random.Range(0.1f, 0.2f);
-        ////////////////////////////////Pupil Pos
-        female.customInfo.shapeValueFace[37] = UnityEngine.Random.Range(0.4f, 0.5f);
-        ////////////////////////////////Pupil Width
-        female.customInfo.shapeValueFace[38] = UnityEngine.Random.Range(0.45f, 0.6f);
-        ////////////////////////////////Pupil Height
-        female.customInfo.shapeValueFace[39] = UnityEngine.Random.Range(0.50f, 0.6f);
-
-        ////////////////////////////////Nose Height
-        female.customInfo.shapeValueFace[40] = UnityEngine.Random.Range(0.5f, 0.7f);
-        ////////////////////////////////Nose Projection
-        female.customInfo.shapeValueFace[41] = UnityEngine.Random.Range(0.4f, 0.6f);
-        ////////////////////////////////Nose Angle
-        female.customInfo.shapeValueFace[42] = UnityEngine.Random.Range(0.5f, 0.6f);
-        ////////////////////////////////Nose Size
-        female.customInfo.shapeValueFace[43] = UnityEngine.Random.Range(0.3f, 0.5f);
-
-        ////////////////////////////////Bridge Height
-        female.customInfo.shapeValueFace[44] = UnityEngine.Random.Range(0.4f, 0.5f);
-        ////////////////////////////////Bridge Width
-        female.customInfo.shapeValueFace[45] = UnityEngine.Random.Range(0.3f, 0.5f);
-        ////////////////////////////////Bridge Shape
-        female.customInfo.shapeValueFace[46] = UnityEngine.Random.Range(0.3f, 0.6f);
-        ////////////////////////////////Nose Width
-        female.customInfo.shapeValueFace[47] = UnityEngine.Random.Range(0.3f, 0.7f);
-
-        ////////////////////////////////Nostril Height
-        female.customInfo.shapeValueFace[48] = UnityEngine.Random.Range(0.2f, 0.6f);
-        ////////////////////////////////Nostril Length
-        female.customInfo.shapeValueFace[49] = UnityEngine.Random.Range(0.2f, 0.4f);
-        ////////////////////////////////Nostril Inner Width
-        female.customInfo.shapeValueFace[50] = UnityEngine.Random.Range(0.2f, 0.5f);
-        ////////////////////////////////Nostril Outer Width
-        female.customInfo.shapeValueFace[51] = UnityEngine.Random.Range(0.3f, 0.8f);
-
-        ////////////////////////////////Tip Length
-        female.customInfo.shapeValueFace[52] = UnityEngine.Random.Range(0.4f, 0.65f);
-        ////////////////////////////////Tip Height
-        female.customInfo.shapeValueFace[53] = UnityEngine.Random.Range(0.3f, 0.45f);
-        ////////////////////////////////Tip Size
-        female.customInfo.shapeValueFace[54] = UnityEngine.Random.Range(0.4f, 0.6f);
-
-        ////////////////////////////////Mouth Height
-        female.customInfo.shapeValueFace[55] = UnityEngine.Random.Range(0.5f, 0.8f);
-        ////////////////////////////////Mouth Width
-        female.customInfo.shapeValueFace[56] = UnityEngine.Random.Range(0.5f, 0.8f);
-        ////////////////////////////////Lip Thickness
-        female.customInfo.shapeValueFace[57] = UnityEngine.Random.Range(0.1f, 0.3f);
-        ////////////////////////////////Mouth Projection
-        female.customInfo.shapeValueFace[58] = UnityEngine.Random.Range(0.3f, 0.5f);
-        ////////////////////////////////Upper Lip Thickness
-        female.customInfo.shapeValueFace[59] = UnityEngine.Random.Range(0.1f, 0.3f);
-        ////////////////////////////////Lower Lip Thickness
-        female.customInfo.shapeValueFace[60] = UnityEngine.Random.Range(0.1f, 0.3f);
-        ////////////////////////////////Corner Shape
-        female.customInfo.shapeValueFace[61] = UnityEngine.Random.Range(0.1f, 0.5f);
-
-        ////////////////////////////////Ear Size
-        female.customInfo.shapeValueFace[62] = UnityEngine.Random.Range(0.4f, 0.6f);
-        ////////////////////////////////Ear Angle
-        female.customInfo.shapeValueFace[63] = UnityEngine.Random.Range(0.3f, 0.5f);
-        ////////////////////////////////Ear Rotation
-        female.customInfo.shapeValueFace[64] = UnityEngine.Random.Range(0.1f, 0.4f);
-        ////////////////////////////////Upper Ear Shape
-        female.customInfo.shapeValueFace[65] = UnityEngine.Random.Range(0.3f, 0.4f);
-        ////////////////////////////////Lower Ear Shape
-        female.customInfo.shapeValueFace[66] = UnityEngine.Random.Range(0.2f, 0.5f);
-
 
         //////////////////////////////// numbers
         float num2 = 0f;
@@ -874,80 +897,50 @@ public class HS1RandomizeAll : MonoBehaviour
     void RandomiseCharBody()
     {
         if (female == null) return;
-        //////////////////////////////// height
-        female.customInfo.shapeValueBody[0] = UnityEngine.Random.Range(0.6f, 0.95f);
-        //////////////////////////////// bust size
-        female.customInfo.shapeValueBody[1] = UnityEngine.Random.Range(0.6f, 0.8f);
-        //////////////////////////////// Breast height,
-        female.customInfo.shapeValueBody[2] = UnityEngine.Random.Range(0.1f, 0.4f);
-        //////////////////////////////// Breast direction
-        female.customInfo.shapeValueBody[3] = UnityEngine.Random.Range(0.4f, 0.9f);
-        //////////////////////////////// Breast spacing,
-        female.customInfo.shapeValueBody[4] = UnityEngine.Random.Range(0.1f, 0.5f);
-        //////////////////////////////// Breast angle,
-        female.customInfo.shapeValueBody[5] = UnityEngine.Random.Range(0.35f, 0.6f);
-        //////////////////////////////// Breast lenght,
-        female.customInfo.shapeValueBody[6] = UnityEngine.Random.Range(0.2f, 0.5f);
-        //////////////////////////////// Areola puffiness,
-        female.customInfo.shapeValueBody[7] = UnityEngine.Random.Range(0.2f, 0.8f);
-        //////////////////////////////// Nipple width,
-        female.customInfo.shapeValueBody[8] = UnityEngine.Random.Range(0.3f, 0.6f);
 
-        //////////////////////////////// areolaSize
-        female.femaleCustomInfo.areolaSize = UnityEngine.Random.Range(0.6f, 0.8f);
-        //////////////////////////////// bustSoftness,
-        female.femaleCustomInfo.bustSoftness = UnityEngine.Random.Range(0.6f, 0.8f);
-        ////////////////////////////////bustWeight
-        female.femaleCustomInfo.bustWeight = UnityEngine.Random.Range(0.8f, 1f);
+        var dllPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+        string configFilename = "Randomizer.json";
+        var configPath = Path.Combine(dllPath, configFilename);
+		
+		//// from https://answers.unity.com/questions/1473952/how-to-write-and-read-json-in-unity.html  
+		//// https://github.com/Bunny83/SimpleJSON
+        string jsonString = File.ReadAllText(configPath); 
+        JSONNode data = JSON.Parse(jsonString);
+		JSONNode BodyPresets = data["BodyPresets"];
+		
+		//gets a random preset from the list
+		var randompreset = BodyPresets[UnityEngine.Random.Range(0, BodyPresets.Count)];
+		JSONNode preset = BodyPresets[randompreset];
 
-        ////////////////////////////////Head size,
-        female.customInfo.shapeValueBody[9] = UnityEngine.Random.Range(0.3f, 0.5f);
-        ////////////////////////////////Neck width,
-        female.customInfo.shapeValueBody[10] = UnityEngine.Random.Range(0.4f, 0.5f);
-        ////////////////////////////////Neck thickness,
-        female.customInfo.shapeValueBody[11] = UnityEngine.Random.Range(0.4f, 0.5f);
-        ////////////////////////////////Thorax width,
-        female.customInfo.shapeValueBody[12] = UnityEngine.Random.Range(0.5f, 0.6f);
-        ////////////////////////////////Thorax thickness,
-        female.customInfo.shapeValueBody[13] = UnityEngine.Random.Range(0.45f, 0.6f);
-        ////////////////////////////////Chest width,
-        female.customInfo.shapeValueBody[14] = UnityEngine.Random.Range(0.45f, 0.6f);
-        ////////////////////////////////Chest thickness,
-        female.customInfo.shapeValueBody[15] = UnityEngine.Random.Range(0.45f, 0.65f);
-        ////////////////////////////////Waist width,
-        female.customInfo.shapeValueBody[16] = UnityEngine.Random.Range(0.45f, 0.55f);
-        ////////////////////////////////Waist thickness,
-        female.customInfo.shapeValueBody[17] = UnityEngine.Random.Range(0.45f, 0.55f);
-        ////////////////////////////////Waist height,
-        female.customInfo.shapeValueBody[18] = UnityEngine.Random.Range(0.45f, 0.5f);
-        ////////////////////////////////Pelvis width,
-        female.customInfo.shapeValueBody[19] = UnityEngine.Random.Range(0.45f, 0.55f);
-        ////////////////////////////////Pelvis thickness,
-        female.customInfo.shapeValueBody[20] = UnityEngine.Random.Range(0.55f, 0.75f);
-        ////////////////////////////////hips width,
-        female.customInfo.shapeValueBody[21] = UnityEngine.Random.Range(0.55f, 0.75f);
-        ////////////////////////////////hips thickness,
-        female.customInfo.shapeValueBody[22] = UnityEngine.Random.Range(0.55f, 0.75f);
-
-        ////////////////////////////////Butt,
-        female.customInfo.shapeValueBody[23] = UnityEngine.Random.Range(0.8f, 1.2f);
-        ////////////////////////////////Butt angle,
-        female.customInfo.shapeValueBody[24] = UnityEngine.Random.Range(-0.2f, -0.15f);
-        ////////////////////////////////thighs,
-        female.customInfo.shapeValueBody[25] = UnityEngine.Random.Range(0.60f, 0.9f);
-        ////////////////////////////////legs,
-        female.customInfo.shapeValueBody[26] = UnityEngine.Random.Range(0.25f, 0.35f);
-        ////////////////////////////////Calves,
-        female.customInfo.shapeValueBody[27] = UnityEngine.Random.Range(0.6f, 0.8f);
-        ////////////////////////////////ankles,
-        female.customInfo.shapeValueBody[28] = UnityEngine.Random.Range(0.45f, 0.6f);
-        ////////////////////////////////shoulders,
-        female.customInfo.shapeValueBody[29] = UnityEngine.Random.Range(0.5f, 0.7f);
-        ////////////////////////////////upper arms,
-        female.customInfo.shapeValueBody[30] = UnityEngine.Random.Range(0.45f, 0.6f);
-        ////////////////////////////////Lower arms,
-        female.customInfo.shapeValueBody[31] = UnityEngine.Random.Range(0.45f, 0.6f);
-
+        float min1 = preset["height"]["x"];
+        float min2 = preset["upper_arms"]["x"];
+        float min3 = preset["lower_arms"]["x"];
+		
+        float max1 = preset["height"]["y"];
+        float max2 = preset["upper_arms"]["y"];
+        float max3 = preset["lower_arms"]["y"];
+		
+		// applies the values
+        female.customInfo.shapeValueBody[0] = UnityEngine.Random.Range(min1, max1);
+        female.customInfo.shapeValueBody[1] = UnityEngine.Random.Range(min2, max2);
+        female.customInfo.shapeValueBody[2] = UnityEngine.Random.Range(min3, max3);
+		
+        //int slider = 0;
+        //foreach (PropertyInfo Property in token.FacePreset.GetType().GetProperties())
+        //{        
+        //  if (slider = 0)
+        //  {           
+        //  }
+        //  else
+        //  {
+        //    var v1 = preset.Overall_Face_Breadth;
+        //    var v2 = preset.Upper_face_depth;
+        //    var v3 = preset.Face_height;
+        //    Vector2 currentkey = (Vector2)Property.GetValue(token.FacePresets);
+        //    female.customInfo.shapeValueBody[slider] = UnityEngine.Random.Range(currentkey.x, currentkey.y);
+        //    slider++;
+        //  }
+        //}
 
 
         ////////////////////////////////skincolor
@@ -1045,51 +1038,54 @@ public class HS1RandomizeAll : MonoBehaviour
         //}
         //}
 
-        ////////////////////////////////tattoo
-        //if (tattoo)
-        //{
-        //	if (UnityEngine.Random.Range(0, 100) < 10)
-        //	{
-        //		Dictionary<int, ListTypeTexture> femaleTextureList = female.ListInfo.GetFemaleTextureList(CharaListInfo.TypeFemaleTexture.cf_t_tattoo_f);
-        //		List<int> list2 = new List<int>();
-        //		foreach (KeyValuePair<int, ListTypeTexture> item7 in femaleTextureList)
-        //		{
-        //			int randomRate = item7.Value.RandomRate;
-        //			for (int i = 0; i < randomRate; i++)
-        //			{
-        //				list2.Add(item7.Key);
-        //			}
-        //		}
-        //		int index8 = UnityEngine.Random.Range(0, list2.Count);
-        //		female.customInfo.texTattoo_fId = list2[index8];
-        //		float[,] array4 = new float[2, 3]
-        //		{
-        //			{
-        //				0f,
-        //				0.2f,
-        //				0.2f
-        //			},
-        //			{
-        //				0f,
-        //				0.5f,
-        //				0.5f
-        //			}
-        //		};
-        //		int num12 = UnityEngine.Random.Range(0, array4.GetLength(0));
-        //		female.customInfo.tattoo_fColor.hsvDiffuse = new HsvColor(array4[num12, 0], array4[num12, 1], array4[num12, 2]);
-        //	}
-        //	else
-        //	{
-        //		female.customInfo.texTattoo_fId = 0;
-        //	}
-        //}
-        //else
-        //{
-        //	female.customInfo.texTattoo_fId = 0;
-        //}
+        //////////////////////////////tattoo
+        // if (tattoo)
+        // {
+		    JSONNode BodySettings = data["BodySettings"];
+			int tattoo_chance = BodySettings["tattoo_chance"];
+        	if (UnityEngine.Random.Range(0, 100) < tattoo_chance)
+        	{
+        		Dictionary<int, ListTypeTexture> femaleTextureList = female.ListInfo.GetFemaleTextureList(CharaListInfo.TypeFemaleTexture.cf_t_tattoo_f);
+        		List<int> list2 = new List<int>();
+        		foreach (KeyValuePair<int, ListTypeTexture> item7 in femaleTextureList)
+        		{
+        			int randomRate = item7.Value.RandomRate;
+        			for (int i = 0; i < randomRate; i++)
+        			{
+        				list2.Add(item7.Key);
+        			}
+        		}
+        		int index8 = UnityEngine.Random.Range(0, list2.Count);
+        		female.customInfo.texTattoo_fId = list2[index8];
+        		float[,] array4 = new float[2, 3]
+        		{
+        			{
+        				0f,
+        				0.2f,
+        				0.2f
+        			},
+        			{
+        				0f,
+        				0.5f,
+        				0.5f
+        			}
+        		};
+        		int num12 = UnityEngine.Random.Range(0, array4.GetLength(0));
+        		female.customInfo.tattoo_fColor.hsvDiffuse = new HsvColor(array4[num12, 0], array4[num12, 1], array4[num12, 2]);
+        	}
+        	else
+        	{
+        		female.customInfo.texTattoo_fId = 0;
+        	}
+        // }
+        // else
+        // {
+        	// female.customInfo.texTattoo_fId = 0;
+        // }
 
         //////////////////////////////// body Detail
-        if (UnityEngine.Random.Range(0, 100) < 40)
+		int body_detail_chance = BodySettings["body_detail_chance"];
+        if (UnityEngine.Random.Range(0, 100) < body_detail_chance)
         {
             Dictionary<int, ListTypeTexture> femaleTextureList6 = female.ListInfo.GetFemaleTextureList(CharaListInfo.TypeFemaleTexture.cf_t_detail_b);
             int index17 = UnityEngine.Random.Range(0, femaleTextureList6.Count);
@@ -1102,55 +1098,58 @@ public class HS1RandomizeAll : MonoBehaviour
         }
 
         //////////////////////////////// tattoo
-        //if (tattoo)
-        //{
-        //	if (UnityEngine.Random.Range(0, 100) < 10)
-        //	{
-        //		Dictionary<int, ListTypeTexture> femaleTextureList7 = female.ListInfo.GetFemaleTextureList(CharaListInfo.TypeFemaleTexture.cf_t_tattoo_b);
-        //		List<int> list7 = new List<int>();
-        //		foreach (KeyValuePair<int, ListTypeTexture> item12 in femaleTextureList7)
-        //		{
-        //			int randomRate3 = item12.Value.RandomRate;
-        //			for (int n = 0; n < randomRate3; n++)
-        //			{
-        //				list7.Add(item12.Key);
-        //			}
-        //		}
-        //		int index18 = UnityEngine.Random.Range(0, list7.Count);
-        //		female.customInfo.texTattoo_bId = list7[index18];
-        //		float[,] array7 = new float[3, 3]
-        //		{
-        //			{
-        //				200f,
-        //				0.3f,
-        //				0.3f
-        //			},
-        //			{
-        //				0f,
-        //				0.2f,
-        //				0.2f
-        //			},
-        //			{
-        //				0f,
-        //				1f,
-        //				0.3f
-        //			}
-        //		};
-        //		int num18 = UnityEngine.Random.Range(0, array7.GetLength(0));
-        //		female.customInfo.tattoo_bColor.hsvDiffuse = new HsvColor(array7[num18, 0], array7[num18, 1], array7[num18, 2]);
-        //	}
-        //	else
-        //	{
-        //		female.customInfo.texTattoo_bId = 0;
-        //	}
-        //}
-        //else
-        //{
-        //	female.customInfo.texTattoo_bId = 0;
-        //}
+        // if (tattoo)
+        // {
+			
+			int tattoo_chance = BodySettings["tattoo_chance"];
+        	if (UnityEngine.Random.Range(0, 100) < tattoo_chance)
+        	{
+        		Dictionary<int, ListTypeTexture> femaleTextureList7 = female.ListInfo.GetFemaleTextureList(CharaListInfo.TypeFemaleTexture.cf_t_tattoo_b);
+        		List<int> list7 = new List<int>();
+        		foreach (KeyValuePair<int, ListTypeTexture> item12 in femaleTextureList7)
+        		{
+        			int randomRate3 = item12.Value.RandomRate;
+        			for (int n = 0; n < randomRate3; n++)
+        			{
+        				list7.Add(item12.Key);
+        			}
+        		}
+        		int index18 = UnityEngine.Random.Range(0, list7.Count);
+        		female.customInfo.texTattoo_bId = list7[index18];
+        		float[,] array7 = new float[3, 3]
+        		{
+        			{
+        				200f,
+        				0.3f,
+        				0.3f
+        			},
+        			{
+        				0f,
+        				0.2f,
+        				0.2f
+        			},
+        			{
+        				0f,
+        				1f,
+        				0.3f
+        			}
+        		};
+        		int num18 = UnityEngine.Random.Range(0, array7.GetLength(0));
+        		female.customInfo.tattoo_bColor.hsvDiffuse = new HsvColor(array7[num18, 0], array7[num18, 1], array7[num18, 2]);
+        	}
+        	else
+        	{
+        		female.customInfo.texTattoo_bId = 0;
+        	}
+        // }
+        // else
+        // {
+        	// female.customInfo.texTattoo_bId = 0;
+        // }
 
         //////////////////////////////// sunburn
-        if (UnityEngine.Random.Range(0, 100) < 20)
+		int sunburn_chance = BodySettings["sunburn_chance"];
+        if (UnityEngine.Random.Range(0, 100) < sunburn_chance)
         {
             Dictionary<int, ListTypeTexture> femaleTextureList8 = female.ListInfo.GetFemaleTextureList(CharaListInfo.TypeFemaleTexture.cf_t_sunburn);
             List<int> list8 = new List<int>();
@@ -1337,61 +1336,34 @@ public class HS1RandomizeAll : MonoBehaviour
     }
 
 
-	//public virtual void ExecuteSaveNew()
-	//{
-	//	if (!(null == chaInfo) && chaInfo.chaFile != null)
-	//	{
-	//		string empty = string.Empty;
-	//		empty = ((chaInfo.Sex != 0) ? ("charaF_" + DateTime.Now.ToString("yyyyMMddHHmmssfff")) : ("charaM_" + DateTime.Now.ToString("yyyyMMddHHmmssfff")));
-	//		if (chaInfo.Sex == 1)
-	//		{
-	//			CharFileInfoParameterFemale charFileInfoParameterFemale = chaInfo.chaFile.parameterInfo as CharFileInfoParameterFemale;
-	//			charFileInfoParameterFemale.InitParameter = true;
-	//			Singleton<Info>.Instance.InitState(charFileInfoParameterFemale, chaInfo.customInfo.personality, _isForce: true);
-	//		}
-	//		customControl.CustomSaveCharaAssist(empty);
-	//		FileInfo fileInfo = new FileInfo();
-	//		fileInfo.no = 0;
-	//		fileInfo.time = DateTime.Now;
-	//		fileInfo.FileName = empty;
-	//		fileInfo.FullPath = chaInfo.chaFile.ConvertCharaFilePath(empty);
-	//		fileInfo.CharaName = customInfo.name;
-	//		fileInfo.personality = customInfo.personality;
-	//		fileInfo.limited = false;
-	//		lstFileInfo.Add(fileInfo);
-	//		CreateListObject();
-	//		UpdateSort();
-	//	}
-	//}
-	//
-	//
-
-    public void Load()
-    {
-        var config = Config.Load();
-        
-        var path = GetCurrentlyEditedBoneModFilePath();
-
-        if (path == null)
-            return;
-
-        if (File.Exists(path))
-        {
-            // _log.Info("Loading: " + path);
-
-            var bones = ReadBones(path);
-
-            if (bones.Length == 0)
-                return;
-
-            if (HasGUI)
-                Unload();
-
-            StartCoroutine(CreateGUI(config, bones));
-
-            HasGUI = true;
-        }
-    }
+    //public virtual void ExecuteSaveNew()
+    //{
+    //	if (!(null == chaInfo) && chaInfo.chaFile != null)
+    //	{
+    //		string empty = string.Empty;
+    //		empty = ((chaInfo.Sex != 0) ? ("charaF_" + DateTime.Now.ToString("yyyyMMddHHmmssfff")) : ("charaM_" + DateTime.Now.ToString("yyyyMMddHHmmssfff")));
+    //		if (chaInfo.Sex == 1)
+    //		{
+    //			CharFileInfoParameterFemale charFileInfoParameterFemale = chaInfo.chaFile.parameterInfo as CharFileInfoParameterFemale;
+    //			charFileInfoParameterFemale.InitParameter = true;
+    //			Singleton<Info>.Instance.InitState(charFileInfoParameterFemale, chaInfo.customInfo.personality, _isForce: true);
+    //		}
+    //		customControl.CustomSaveCharaAssist(empty);
+    //		FileInfo fileInfo = new FileInfo();
+    //		fileInfo.no = 0;
+    //		fileInfo.time = DateTime.Now;
+    //		fileInfo.FileName = empty;
+    //		fileInfo.FullPath = chaInfo.chaFile.ConvertCharaFilePath(empty);
+    //		fileInfo.CharaName = customInfo.name;
+    //		fileInfo.personality = customInfo.personality;
+    //		fileInfo.limited = false;
+    //		lstFileInfo.Add(fileInfo);
+    //		CreateListObject();
+    //		UpdateSort();
+    //	}
+    //}
+    //
+    //
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     //public static void RandBody2(CharFemale female, List<CharFemaleRandom.RandomFaceFemaleInfo> lstRandFace)
@@ -1406,7 +1378,35 @@ public class HS1RandomizeAll : MonoBehaviour
 
     ////////////////////////////////////////////////////////////////
 
-
+    // to load arrays in JsonUtility
+    public static class JsonHelper
+    {
+        public static T[] FromJson<T>(string json)
+        {
+            Wrapper<T> wrapper = JsonUtility.FromJson<Wrapper<T>>(json);
+            return wrapper.Items;
+        }
+    
+        public static string ToJson<T>(T[] array)
+        {
+            Wrapper<T> wrapper = new Wrapper<T>();
+            wrapper.Items = array;
+            return JsonUtility.ToJson(wrapper);
+        }
+    
+        public static string ToJson<T>(T[] array, bool prettyPrint)
+        {
+            Wrapper<T> wrapper = new Wrapper<T>();
+            wrapper.Items = array;
+            return JsonUtility.ToJson(wrapper, prettyPrint);
+        }
+    
+        [Serializable]
+        private class Wrapper<T>
+        {
+            public T[] Items;
+        }
+    }
 
     //}
     ////////////////////////////////////////////////////////////////////////////////////////////////

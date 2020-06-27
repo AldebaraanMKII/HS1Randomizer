@@ -7,8 +7,8 @@
     <ProjectGuid>{070C75CE-A321-4F59-86EB-A9CCC703447E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>HS1_Randomizer</RootNamespace>
-    <AssemblyName>HS1 Randomizer</AssemblyName>
+    <RootNamespace>HS1Randomizer</RootNamespace>
+    <AssemblyName>HS1Randomizer</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
