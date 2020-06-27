@@ -16,13 +16,13 @@
        "texFaceDetailId": {"x":0, "y":9},
        "faceDetailWeight": {"x":0.1, "y":0.8},
        "hair_color_predefined_preset_chance": 80,
-       "heterochromia_chance": 100,
+       "heterochromia_chance": 10,
        "eye_shadow_chance": 20,
        "lipstick_chance": 20,
        "cheeks_detail_chance": 20,
        "mole_chance": 10,
-       "elf_ears_chance": 100,
-       "eyes_match_hair_color_chance": 10
+       "elf_ears_chance": 10,
+       "eyes_match_hair_color_chance": 100
     },
 
     "BodySettings" : {
@@ -36,7 +36,6 @@
     "ClothSettings" : {
        "glasses_chance": 10,
        "tattoo_chance": 10,
-       "firgernail_paint_match_hair_color_chance": 0
     },
  
  
