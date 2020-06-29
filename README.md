@@ -23,6 +23,14 @@ How To use
     Numpad 4 = Randomize face/body
     Numpad 5 = Random clothes/Accessories
 
+
+Json file
+
+    This can be edited to change the values used in generation even if the game is running (no need to restart).
+    New presets can be added.
+    See https://docs.unity3d.com/Manual/class-InputManager.html for a list of keys.
+    Use https://jsonlint.com/ to see if your json has correct syntax.
+
 Bugs
 
     Hairs sets from modded characters sometimes f*ck up the end result
@@ -30,13 +38,10 @@ Bugs
    
 To-do (I'm no programmer so these things are not guaranteed)
 
-    ini file to store slider min/max values
-    preset to load
     preset colors for hair, eyes, skin, aureola and fingernails
     name/surname list
     save as card hotkey
     accessory toggle/percentage
-    tattoo toggle/percentage
     glasses toggle/percentage
     log file
 
