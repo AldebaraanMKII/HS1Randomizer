@@ -47,141 +47,6 @@ public class HS1RandomizeAll : MonoBehaviour
     string Key4;
     string Key5;
 
-
-    [System.Serializable]
-    public class RootObject
-    {
-        public KeyCodes KeyCodes;
-    }
-
-    [System.Serializable]
-    public class KeyCodes
-    {
-        public string RandomizeAllKey;
-        public string RandomizeFaceKey;
-        public string RandomizeBodyKey;
-        public string RandomizeFaceBodyKey;
-        public string RandomizeClothesKey;
-    }
-
-    [System.Serializable]
-    public class Token
-    {
-        public FacePreset[] FacePresets;
-        public BodyPreset[] BodyPresets;
-        // public Key[] Keys;
-    }
-
-    [System.Serializable]
-    public class FacePreset
-    {
-        public string name;
-        public Vector2 overall_face_breadth;
-        public Vector2 upper_face_depth;
-        public Vector2 face_height;
-        public Vector2 lower_face_depth;
-        public Vector2 lower_face_width;
-        public Vector2 jaw_width;
-        public Vector2 jaw_height;
-        public Vector2 jaw_depth;
-        public Vector2 jaw_angle;
-        public Vector2 neck_droop;
-        public Vector2 chin_width;
-        public Vector2 chin_height;
-        public Vector2 chin_depth;
-        public Vector2 lower_cheek_height;
-        public Vector2 lower_cheek_depth;
-        public Vector2 lower_cheek_width;
-        public Vector2 upper_cheek_height;
-        public Vector2 upper_cheek_depth;
-        public Vector2 upper_cheek_width;
-        public Vector2 eyebrow_height;
-        public Vector2 eyebrow_spacing;
-        public Vector2 eyebrow_angle;
-        public Vector2 inner_arching;
-        public Vector2 outer_arching;
-        public Vector2 eye_height;
-        public Vector2 eye_spacing;
-        public Vector2 eye_depth;
-        public Vector2 eye_width;
-        public Vector2 eye_openness;
-        public Vector2 eye_angle_1;
-        public Vector2 eye_angle_2;
-        public Vector2 inner_corner_distance;
-        public Vector2 outer_corner_distance;
-        public Vector2 inner_corner_height;
-        public Vector2 outer_corner_height;
-        public Vector2 eyelid_shape_1;
-        public Vector2 eyelid_shape_2;
-        public Vector2 pupil_pos;
-        public Vector2 pupil_width;
-        public Vector2 pupil_height;
-        public Vector2 nose_height;
-        public Vector2 nose_projection;
-        public Vector2 nose_angle;
-        public Vector2 nose_size;
-        public Vector2 bridge_height;
-        public Vector2 bridge_width;
-        public Vector2 bridge_shape;
-        public Vector2 nose_width;
-        public Vector2 nostril_height;
-        public Vector2 nostril_length;
-        public Vector2 nostril_inner_width;
-        public Vector2 nostril_outer_width;
-        public Vector2 tip_height;
-        public Vector2 tip_length;
-        public Vector2 tip_size;
-        public Vector2 mouth_height;
-        public Vector2 mouth_width;
-        public Vector2 lip_thickness;
-        public Vector2 mouth_projection;
-        public Vector2 upper_lip_thickness;
-        public Vector2 lower_lip_thickness;
-        public Vector2 corner_shape;
-        public Vector2 ear_size;
-        public Vector2 ear_angle;
-        public Vector2 ear_rotation;
-        public Vector2 upper_ear_shape;
-        public Vector2 lower_ear_shape;
-    }
-
-    [System.Serializable]
-    public class BodyPreset
-    {
-        public string name;
-        public Vector2 height;
-        public Vector2 bust_size;
-        public Vector2 breast_height;
-        public Vector2 breast_direction;
-        public Vector2 breast_spacing;
-        public Vector2 breast_angle;
-        public Vector2 breast_lenght;
-        public Vector2 areola_puffiness;
-        public Vector2 nipple_width;
-        public Vector2 head_size;
-        public Vector2 neck_width;
-        public Vector2 neck_thickness;
-        public Vector2 thorax_width;
-        public Vector2 thorax_thickness;
-        public Vector2 chest_width;
-        public Vector2 chest_thickness;
-        public Vector2 waist_width;
-        public Vector2 waist_thickness;
-        public Vector2 waist_height;
-        public Vector2 pelvis_width;
-        public Vector2 pelvis_thickness;
-        public Vector2 hips_width;
-        public Vector2 butt;
-        public Vector2 butt_angle;
-        public Vector2 thighs;
-        public Vector2 legs;
-        public Vector2 calves;
-        public Vector2 ankles;
-        public Vector2 shoulders;
-        public Vector2 upper_arms;
-        public Vector2 lower_arms;
-    }
-
     public Vector2 currentkey;
 
     protected List<CharFemaleRandom.RandomFaceFemaleInfo> lstRandFaceF = new List<CharFemaleRandom.RandomFaceFemaleInfo>();
@@ -331,7 +196,6 @@ public class HS1RandomizeAll : MonoBehaviour
         //4
         //26
         //9
-        // RandomiseCharPersonality(female);
         int index = UnityEngine.Random.Range(0, 4);
         int index22 = UnityEngine.Random.Range(0, 26);
         int index23 = UnityEngine.Random.Range(0, 9);
@@ -1188,6 +1052,26 @@ public class HS1RandomizeAll : MonoBehaviour
         ////gets a random preset from the list
         var randompreset = BodyPresets[UnityEngine.Random.Range(0, BodyPresets.Count)];
 
+
+        //////// automate this
+        //int slider = 0;
+        //var presetobject = 0;
+        //while (presetobject <= 33)
+        //{
+		//	if (presetobject == 0)
+		//	{
+		//		presetobject++; // skip name
+		//	}
+		//	else
+		//	{   float min = randompreset[presetobject]["x"];
+		//		float max = randompreset[presetobject]["y"];
+        //        female.customInfo.shapeValueBody[slider] = UnityEngine.Random.Range(min, max);
+		//		slider++;
+		//		presetobject++;
+		//	}
+		//}
+        ////////////
+
         float min1 = randompreset["height"]["x"];
         float min2 = randompreset["bust_size"]["x"];
         float min3 = randompreset["breast_height"]["x"];
@@ -1224,7 +1108,7 @@ public class HS1RandomizeAll : MonoBehaviour
         float min33 = randompreset["areolaSize"]["x"];
         float min34 = randompreset["bustSoftness"]["x"];
         float min35 = randompreset["bustWeight"]["x"];
-
+		
         float max1 = randompreset["height"]["y"];
         float max2 = randompreset["bust_size"]["y"];
         float max3 = randompreset["breast_height"]["y"];
@@ -1261,7 +1145,7 @@ public class HS1RandomizeAll : MonoBehaviour
         float max33 = randompreset["areolaSize"]["y"];
         float max34 = randompreset["bustSoftness"]["y"];
         float max35 = randompreset["bustWeight"]["y"];
-
+		
         //// applies the values
         female.customInfo.shapeValueBody[0] = UnityEngine.Random.Range(min1, max1);
         female.customInfo.shapeValueBody[1] = UnityEngine.Random.Range(min2, max2);
@@ -1295,7 +1179,7 @@ public class HS1RandomizeAll : MonoBehaviour
         female.customInfo.shapeValueBody[29] = UnityEngine.Random.Range(min30, max30);
         female.customInfo.shapeValueBody[30] = UnityEngine.Random.Range(min31, max31);
         female.customInfo.shapeValueBody[31] = UnityEngine.Random.Range(min32, max32);
-
+		
         female.femaleCustomInfo.areolaSize = UnityEngine.Random.Range(min33, max33);
         female.femaleCustomInfo.bustSoftness = UnityEngine.Random.Range(min34, max34);
         female.femaleCustomInfo.bustWeight = UnityEngine.Random.Range(min35, max35);
