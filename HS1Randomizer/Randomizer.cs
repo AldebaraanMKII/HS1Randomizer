@@ -684,13 +684,13 @@ public class HS1RandomizeAll : MonoBehaviour
         //switch (hairType)
         //{
         //default:
-        // foreach (KeyValuePair<int, ListTypeFbx> item6 in femaleFbxList)
-        // {
-            // if (!("0" == item6.Value.Etc[1]))
-            // {
-                // list.Add(item6.Key);
-            // }
-        // }
+        foreach (KeyValuePair<int, ListTypeFbx> item6 in femaleFbxList)
+        {
+            if (!("0" == item6.Value.Etc[1]))
+            {
+                list.Add(item6.Key);
+            }
+        }
         //break;
         //}
         // int index5 = UnityEngine.Random.Range(0, list.Count);
