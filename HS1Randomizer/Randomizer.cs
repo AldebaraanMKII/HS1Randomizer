@@ -684,13 +684,13 @@ public class HS1RandomizeAll : MonoBehaviour
         //switch (hairType)
         //{
         //default:
-        foreach (KeyValuePair<int, ListTypeFbx> item6 in femaleFbxList)
-        {
-            if (!("0" == item6.Value.Etc[1]))
-            {
-                list.Add(item6.Key);
-            }
-        }
+        // foreach (KeyValuePair<int, ListTypeFbx> item6 in femaleFbxList)
+        // {
+            // if (!("0" == item6.Value.Etc[1]))
+            // {
+                // list.Add(item6.Key);
+            // }
+        // }
         //break;
         //}
         // int index5 = UnityEngine.Random.Range(0, list.Count);
@@ -1500,7 +1500,7 @@ public class HS1RandomizeAll : MonoBehaviour
     void RandomiseCharClothing()
     {
         if (female == null) return;
-        CharFemaleRandom.RandClothes(female, accessory: true, megane: false);
+        RandClothes2(female);
     }
 
 
@@ -1594,6 +1594,419 @@ public class HS1RandomizeAll : MonoBehaviour
         charFileInfoCustomFemale.voicePitch = UnityEngine.Random.Range(0.94f, 1.06f);
     }
 
+
+	public static void RandClothes2(CharFemale female)
+	{
+		CharFileInfoClothes.Accessory[] array = new CharFileInfoClothes.Accessory[10];
+		for (int i = 0; i < 10; i++)
+		{
+			array[i] = new CharFileInfoClothes.Accessory();
+		}
+		
+        var dllPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+        string configFilename = "HS1Randomizer.json";
+        var configPath = Path.Combine(dllPath, configFilename);
+
+        string jsonString = File.ReadAllText(configPath);
+        JSONNode data = JSON.Parse(jsonString);
+        JSONNode BodySettings = data["ClothSettings"];
+        int accessory_chance = BodySettings["accessory_chance"];
+        int glasses_chance = BodySettings["glasses_chance"];
+		int num = 0;
+		int num2 = accessory_chance;
+		
+        bool accessory = false;
+		if (UnityEngine.Random.Range(0, 100) < accessory_chance) 
+		{
+		  accessory = true;
+		}
+		
+		if (UnityEngine.Random.Range(0, 100) < glasses_chance) 
+		{
+			Dictionary<int, ListTypeFbx> accessoryFbxList = female.ListInfo.GetAccessoryFbxList(CharaListInfo.TypeAccessoryFbx.ca_f_megane);
+			List<int> list = new List<int>();
+			foreach (KeyValuePair<int, ListTypeFbx> item in accessoryFbxList)
+			{
+				int num3 = int.Parse(item.Value.SiruABPath);
+				for (int j = 0; j < num3; j++)
+				{
+					list.Add(item.Key);
+				}
+			}
+			int index = UnityEngine.Random.Range(0, list.Count);
+			array[num].type = 2;
+			array[num].id = list[index];
+			float[,] array2 = new float[7, 3]
+			{
+				{
+					0f,
+					0f,
+					0f
+				},
+				{
+					0f,
+					0f,
+					0f
+				},
+				{
+					0f,
+					0f,
+					0f
+				},
+				{
+					0f,
+					0.6f,
+					0.3f
+				},
+				{
+					34f,
+					0.55f,
+					0.24f
+				},
+				{
+					249f,
+					0.67f,
+					0.18f
+				},
+				{
+					121f,
+					1f,
+					0.1f
+				}
+			};
+			int num4 = UnityEngine.Random.Range(0, array2.GetLength(0));
+			array[num].color.hsvDiffuse = new HsvColor(array2[num4, 0], array2[num4, 1], array2[num4, 2]);
+			num4 = UnityEngine.Random.Range(0, array2.GetLength(0));
+			array[num].color2.hsvDiffuse = new HsvColor(array2[num4, 0], array2[num4, 1], array2[num4, 2]);
+			num++;
+			num2 -= 5;
+		}
+		
+		if (num == 0 && accessory && UnityEngine.Random.Range(0, 100) < 5)
+		{
+			Dictionary<int, ListTypeFbx> accessoryFbxList2 = female.ListInfo.GetAccessoryFbxList(CharaListInfo.TypeAccessoryFbx.ca_f_face);
+			List<int> list2 = new List<int>();
+			foreach (KeyValuePair<int, ListTypeFbx> item2 in accessoryFbxList2)
+			{
+				int num5 = int.Parse(item2.Value.SiruABPath);
+				for (int k = 0; k < num5; k++)
+				{
+					list2.Add(item2.Key);
+				}
+			}
+			int index2 = UnityEngine.Random.Range(0, list2.Count);
+			array[num].type = 3;
+			array[num].id = list2[index2];
+			num++;
+		}
+		if (accessory && UnityEngine.Random.Range(0, 100) < num2)
+		{
+			Dictionary<int, ListTypeFbx> accessoryFbxList3 = female.ListInfo.GetAccessoryFbxList(CharaListInfo.TypeAccessoryFbx.ca_f_hand);
+			List<int> list3 = new List<int>();
+			foreach (KeyValuePair<int, ListTypeFbx> item3 in accessoryFbxList3)
+			{
+				int num6 = int.Parse(item3.Value.SiruABPath);
+				for (int l = 0; l < num6; l++)
+				{
+					list3.Add(item3.Key);
+				}
+			}
+			int index3 = UnityEngine.Random.Range(0, list3.Count);
+			array[num].type = 10;
+			array[num].id = list3[index3];
+			float[,] array3 = new float[11, 3]
+			{
+				{
+					0f,
+					0.8f,
+					0.8f
+				},
+				{
+					45f,
+					0.8f,
+					0.8f
+				},
+				{
+					90f,
+					0.8f,
+					0.8f
+				},
+				{
+					200f,
+					0.8f,
+					0.8f
+				},
+				{
+					280f,
+					0.8f,
+					0.8f
+				},
+				{
+					0f,
+					0.4f,
+					0.7f
+				},
+				{
+					35f,
+					0.4f,
+					0.7f
+				},
+				{
+					145f,
+					0.4f,
+					0.7f
+				},
+				{
+					205f,
+					0.4f,
+					0.7f
+				},
+				{
+					260f,
+					0.4f,
+					0.7f
+				},
+				{
+					295f,
+					0.4f,
+					0.7f
+				}
+			};
+			int num7 = UnityEngine.Random.Range(0, array3.GetLength(0));
+			array[num].color.hsvDiffuse = new HsvColor(array3[num7, 0], array3[num7, 1], array3[num7, 2]);
+			num7 = UnityEngine.Random.Range(0, array3.GetLength(0));
+			array[num].color2.hsvDiffuse = new HsvColor(array3[num7, 0], array3[num7, 1], array3[num7, 2]);
+			num++;
+			num2 -= 5;
+		}
+		if (accessory && UnityEngine.Random.Range(0, 100) < num2)
+		{
+			float[,] array4 = new float[11, 3]
+			{
+				{
+					0f,
+					0.8f,
+					0.8f
+				},
+				{
+					45f,
+					0.8f,
+					0.8f
+				},
+				{
+					90f,
+					0.8f,
+					0.8f
+				},
+				{
+					200f,
+					0.8f,
+					0.8f
+				},
+				{
+					280f,
+					0.8f,
+					0.8f
+				},
+				{
+					0f,
+					0.4f,
+					0.7f
+				},
+				{
+					35f,
+					0.4f,
+					0.7f
+				},
+				{
+					145f,
+					0.4f,
+					0.7f
+				},
+				{
+					205f,
+					0.4f,
+					0.7f
+				},
+				{
+					260f,
+					0.4f,
+					0.7f
+				},
+				{
+					295f,
+					0.4f,
+					0.7f
+				}
+			};
+			int num8 = UnityEngine.Random.Range(0, array4.GetLength(0));
+			int num9 = UnityEngine.Random.Range(0, array4.GetLength(0));
+			Dictionary<int, ListTypeFbx> accessoryFbxList4 = female.ListInfo.GetAccessoryFbxList(CharaListInfo.TypeAccessoryFbx.ca_f_ear);
+			List<int> list4 = new List<int>();
+			foreach (KeyValuePair<int, ListTypeFbx> item4 in accessoryFbxList4)
+			{
+				int num10 = int.Parse(item4.Value.SiruABPath);
+				for (int m = 0; m < num10; m++)
+				{
+					list4.Add(item4.Key);
+				}
+			}
+			int index4 = UnityEngine.Random.Range(0, list4.Count);
+			array[num].type = 1;
+			array[num].id = list4[index4];
+			array[num].parentKey = "AP_Earring_L";
+			array[num].color.hsvDiffuse = new HsvColor(array4[num8, 0], array4[num8, 1], array4[num8, 2]);
+			array[num].color2.hsvDiffuse = new HsvColor(array4[num9, 0], array4[num9, 1], array4[num9, 2]);
+			num++;
+			array[num].type = 1;
+			array[num].id = list4[index4];
+			array[num].parentKey = "AP_Earring_R";
+			array[num].color.hsvDiffuse = new HsvColor(array4[num8, 0], array4[num8, 1], array4[num8, 2]);
+			array[num].color2.hsvDiffuse = new HsvColor(array4[num9, 0], array4[num9, 1], array4[num9, 2]);
+			num++;
+			num2 -= 10;
+		}
+		if (accessory && UnityEngine.Random.Range(0, 100) < num2)
+		{
+			Dictionary<int, ListTypeFbx> accessoryFbxList5 = female.ListInfo.GetAccessoryFbxList(CharaListInfo.TypeAccessoryFbx.ca_f_neck);
+			List<int> list5 = new List<int>();
+			foreach (KeyValuePair<int, ListTypeFbx> item5 in accessoryFbxList5)
+			{
+				int num11 = int.Parse(item5.Value.SiruABPath);
+				for (int n = 0; n < num11; n++)
+				{
+					list5.Add(item5.Key);
+				}
+			}
+			int index5 = UnityEngine.Random.Range(0, list5.Count);
+			array[num].type = 4;
+			array[num].id = list5[index5];
+			float[,] array5 = new float[11, 3]
+			{
+				{
+					0f,
+					0.8f,
+					0.8f
+				},
+				{
+					45f,
+					0.8f,
+					0.8f
+				},
+				{
+					90f,
+					0.8f,
+					0.8f
+				},
+				{
+					200f,
+					0.8f,
+					0.8f
+				},
+				{
+					280f,
+					0.8f,
+					0.8f
+				},
+				{
+					0f,
+					0.4f,
+					0.7f
+				},
+				{
+					35f,
+					0.4f,
+					0.7f
+				},
+				{
+					145f,
+					0.4f,
+					0.7f
+				},
+				{
+					205f,
+					0.4f,
+					0.7f
+				},
+				{
+					260f,
+					0.4f,
+					0.7f
+				},
+				{
+					295f,
+					0.4f,
+					0.7f
+				}
+			};
+			int num12 = UnityEngine.Random.Range(0, array5.GetLength(0));
+			array[num].color.hsvDiffuse = new HsvColor(array5[num12, 0], array5[num12, 1], array5[num12, 2]);
+			num12 = UnityEngine.Random.Range(0, array5.GetLength(0));
+			array[num].color2.hsvDiffuse = new HsvColor(array5[num12, 0], array5[num12, 1], array5[num12, 2]);
+			num++;
+		}
+		if (accessory && UnityEngine.Random.Range(0, 100) < 10)
+		{
+			Dictionary<int, ListTypeFbx> accessoryFbxList6 = female.ListInfo.GetAccessoryFbxList(CharaListInfo.TypeAccessoryFbx.ca_f_head);
+			List<int> list6 = new List<int>();
+			foreach (KeyValuePair<int, ListTypeFbx> item6 in accessoryFbxList6)
+			{
+				int num13 = int.Parse(item6.Value.SiruABPath);
+				for (int num14 = 0; num14 < num13; num14++)
+				{
+					list6.Add(item6.Key);
+				}
+			}
+			int index6 = UnityEngine.Random.Range(0, list6.Count);
+			array[num].type = 0;
+			array[num].id = list6[index6];
+			if ("1" == accessoryFbxList6[list6[index6]].SiruPrefab)
+			{
+				array[num].color.hsvDiffuse.Copy(new HsvColor(female.customInfo.hairColor[0].hsvDiffuse.H, female.customInfo.hairColor[0].hsvDiffuse.S, female.customInfo.hairColor[0].hsvDiffuse.V));
+			}
+			else
+			{
+				array[num].color.hsvDiffuse = new HsvColor(20f, 0.6f, 0.7f);
+				array[num].color2.hsvDiffuse = new HsvColor(90f, 0.6f, 0.7f);
+			}
+			num++;
+		}
+		Dictionary<int, RandomClothesInfo> randomClothesInfoF = female.ListInfo.GetRandomClothesInfoF();
+		RandomClothesInfo value = null;
+		if (randomClothesInfoF.TryGetValue(0, out value))
+		{
+			CharFileInfoClothesFemale charFileInfoClothesFemale = new CharFileInfoClothesFemale();
+			int index7 = UnityEngine.Random.Range(0, value.lstFileName.Count);
+			charFileInfoClothesFemale.Load(value.abName, value.lstFileName[index7]);
+			for (int num15 = 0; num15 < 10; num15++)
+			{
+				charFileInfoClothesFemale.accessory[num15].Copy(array[num15]);
+			}
+			female.chaFile.coordinateInfo.SetInfo(CharDefine.CoordinateType.type00, charFileInfoClothesFemale);
+		}
+		if (randomClothesInfoF.TryGetValue(1, out value))
+		{
+			CharFileInfoClothesFemale charFileInfoClothesFemale2 = new CharFileInfoClothesFemale();
+			int index8 = UnityEngine.Random.Range(0, value.lstFileName.Count);
+			charFileInfoClothesFemale2.Load(value.abName, value.lstFileName[index8]);
+			for (int num16 = 0; num16 < 10 && array[num16].type == 2; num16++)
+			{
+				charFileInfoClothesFemale2.accessory[num16].Copy(array[num16]);
+			}
+			female.chaFile.coordinateInfo.SetInfo(CharDefine.CoordinateType.type01, charFileInfoClothesFemale2);
+		}
+		if (randomClothesInfoF.TryGetValue(2, out value))
+		{
+			CharFileInfoClothesFemale charFileInfoClothesFemale3 = new CharFileInfoClothesFemale();
+			int index9 = UnityEngine.Random.Range(0, value.lstFileName.Count);
+			charFileInfoClothesFemale3.Load(value.abName, value.lstFileName[index9]);
+			for (int num17 = 0; num17 < 10 && array[num17].type == 2; num17++)
+			{
+				charFileInfoClothesFemale3.accessory[num17].Copy(array[num17]);
+			}
+			female.chaFile.coordinateInfo.SetInfo(CharDefine.CoordinateType.type02, charFileInfoClothesFemale3);
+		}
+	}
 
     //public virtual void ExecuteSaveNew()
     //{
