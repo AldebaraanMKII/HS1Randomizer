@@ -38,9 +38,7 @@ Bugs
    
 To-do (I'm no programmer so these things are not guaranteed)
 
-    preset colors for hair, eyes, skin, aureola and fingernails
     save as card hotkey
-    glasses toggle/percentage
     log file
 
 
