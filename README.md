@@ -13,7 +13,7 @@ How To Install
 
     Download a release (https://github.com/AldebaraanMKII/HS1Randomizer/releases)
     Choose a version
-    Drag and drop the .dll into HoneySelect\Plugins
+    Drag and drop the files into HoneySelect\Plugins
     
 How To use
     
